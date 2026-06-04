@@ -861,6 +861,25 @@
     .modal-head h3 { font-size: 1.4rem; }
     .form-row-2, .form-row-3 { grid-template-columns: 1fr; }
   }
+  /* ─── CONTACT BIG BUTTONS ─── */
+  .contact-big-btn {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--navy-light); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px; padding: 1.1rem 1.25rem;
+    text-decoration: none; color: var(--white);
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .contact-big-btn:hover { border-color: rgba(200,16,46,0.45); background: rgba(200,16,46,0.06); transform: translateX(4px); }
+  .contact-big-btn-red { background: var(--red); border-color: var(--red); }
+  .contact-big-btn-red:hover { background: var(--red-bright); border-color: var(--red-bright); transform: translateX(4px); }
+  .contact-big-btn-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .contact-big-btn-label { font-family: 'Oswald', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.15rem; }
+  .contact-big-btn-red .contact-big-btn-label { color: rgba(255,255,255,0.75); }
+  .contact-big-btn-value { font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600; color: var(--white); letter-spacing: 0.03em; }
+  .contact-big-btn-arrow { margin-left: auto; color: var(--red); font-size: 1.1rem; flex-shrink: 0; }
+  .contact-big-btn-red .contact-big-btn-arrow { color: rgba(255,255,255,0.8); }
+
   /* ── Field validation errors ── */
   .field-error {
     display: block; font-size: 0.75rem; color: #e8192e;
@@ -2429,8 +2448,8 @@
           </div>
 
           <div style="padding:0 1.5rem 1.75rem;">
-            <!-- Replace APP_SUBSCRIPTION_LINK_HERE with your Wix subscription link -->
-            <a href="APP_SUBSCRIPTION_LINK_HERE"
+            <!-- REPLACE this href with your Wix subscription URL when ready -->
+            <a href="https://www.elitetkd.uk/taekwondotrainingapp"
                target="_blank"
                class="btn-red"
                style="display:flex;justify-content:center;width:100%;clip-path:none;border-radius:6px;font-size:1rem;padding:1rem;">
@@ -2485,48 +2504,61 @@
           </div>
         </div>
       </div>
-      <div class="trial-form">
-        <h3>Book Your Free Trial</h3>
-        <p>No commitment. No experience needed. Just show up.</p>
-          <form action="https://formspree.io/f/mykazerd" method="POST" onsubmit="handleContactFormSubmit(event)">
-          <input type="hidden" name="form_type" value="Free Trial Enquiry">
-          <input type="hidden" name="_subject" value="Elite TKD: Free Trial Enquiry">
-          <div class="form-row">
-            <div class="form-group"><label>First Name *</label><input type="text" name="first_name" placeholder="Your first name" required></div>
-            <div class="form-group"><label>Last Name *</label><input type="text" name="last_name" placeholder="Your last name" required></div>
+      <!-- Right: simple contact options -->
+      <div>
+        <div class="section-label" style="justify-content:flex-start;">Quick Contact</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.05em;color:var(--white);margin-bottom:1.5rem;">GET IN TOUCH</h3>
+
+        <!-- Email — big tap target -->
+        <a href="mailto:elitetkdscot@gmail.com" class="contact-big-btn">
+          <div class="contact-big-btn-icon">✉️</div>
+          <div>
+            <div class="contact-big-btn-label">Email Us</div>
+            <div class="contact-big-btn-value">elitetkdscot@gmail.com</div>
           </div>
-          <div class="form-group"><label>Email Address *</label><input type="email" name="_replyto" placeholder="your@email.com" required></div>
-          <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" placeholder="07xxx xxxxxx" required></div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Who is Training?</label>
-              <select name="age_group">
-                <option value="">Select…</option>
-                <option>Ninja Kicker (age 3–7)</option>
-                <option>Junior (age 8–15)</option>
-                <option>Adult (16+)</option>
-                <option>Family group</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Preferred Location</label>
-              <select name="preferred_location">
-                <option value="">Select…</option>
-                <option>Midlothian</option>
-                <option>Edinburgh</option>
-                <option>East Lothian</option>
-                <option>Isle of Arran</option>
-              </select>
-            </div>
+          <div class="contact-big-btn-arrow">→</div>
+        </a>
+
+        <!-- Phone — big tap target -->
+        <a href="tel:07590283735" class="contact-big-btn">
+          <div class="contact-big-btn-icon">📞</div>
+          <div>
+            <div class="contact-big-btn-label">Call or Text</div>
+            <div class="contact-big-btn-value">07590 283735</div>
           </div>
-          <div class="form-group"><label>Anything else?</label><textarea name="message" placeholder="Previous experience, goals, questions…"></textarea></div>
-          <div class="consent-row" style="margin-bottom:1rem;">
-            <input type="checkbox" id="consent-hero" name="consent" value="yes" required style="width:18px;height:18px;min-width:18px;accent-color:#C8102E;padding:0;border:none;background:none;">
-            <label for="consent-hero" style="font-size:0.78rem;color:var(--gray);line-height:1.5;cursor:pointer;letter-spacing:normal;text-transform:none;font-family:'Barlow',sans-serif;font-weight:400;">I consent to Elite Scotland Taekwon-Do contacting me about this enquiry. *</label>
+          <div class="contact-big-btn-arrow">→</div>
+        </a>
+
+        <!-- Free trial modal trigger -->
+        <a href="#" onclick="event.preventDefault();openModal('modal-trial')" class="contact-big-btn contact-big-btn-red">
+          <div class="contact-big-btn-icon">📋</div>
+          <div>
+            <div class="contact-big-btn-label">Ready to start?</div>
+            <div class="contact-big-btn-value">Book Your Free Trial</div>
           </div>
-          <button type="submit" class="btn-red" style="width:100%;justify-content:center;cursor:pointer;">Send Enquiry →</button>
-          <p style="font-size:0.75rem;color:var(--gray);margin-top:0.75rem;text-align:center;">We'll reply within 24 hours. No spam, ever.</p>
-        </form>
+          <div class="contact-big-btn-arrow">→</div>
+        </a>
+
+        <!-- General contact form modal trigger -->
+        <a href="#" onclick="event.preventDefault();openModal('modal-contact')" class="contact-big-btn">
+          <div class="contact-big-btn-icon">💬</div>
+          <div>
+            <div class="contact-big-btn-label">Have a question?</div>
+            <div class="contact-big-btn-value">Send a General Enquiry</div>
+          </div>
+          <div class="contact-big-btn-arrow">→</div>
+        </a>
+
+        <!-- Social -->
+        <div style="margin-top:2rem;">
+          <p style="font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--red);margin-bottom:0.75rem;">Follow Us</p>
+          <div class="social-row">
+            <a href="https://www.facebook.com/elitetaekwondoITF/" target="_blank" class="social-btn" title="Facebook">📘</a>
+            <a href="https://www.instagram.com/elitetaekwondoscot/" target="_blank" class="social-btn" title="Instagram">📸</a>
+            <a href="#" class="social-btn" title="TikTok">🎵</a>
+            <a href="#" class="social-btn" title="YouTube">▶️</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2966,52 +2998,6 @@ async function handleFormSubmit(e, modalId) {
   }
 }
 
-// ── Contact section inline form ──
-async function handleContactFormSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('button[type="submit"]');
-  const note = document.getElementById('contact-form-note');
-  const origLabel = btn.innerHTML;
-
-  if (!validateForm(form)) return;
-
-  btn.disabled = true;
-  btn.innerHTML = '<span style="opacity:0.7">Sending…</span>';
-
-  try {
-    const res = await fetch(FORMSPREE_URL, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (res.ok) {
-      btn.innerHTML = '✓ Sent!';
-      btn.style.background = '#22863a';
-      form.reset();
-      clearFormErrors(form);
-      if (note) {
-        note.textContent = '✓ Enquiry received — we\'ll be in touch within 24 hours!';
-        note.style.color = '#4caf82';
-      }
-      setTimeout(() => {
-        btn.innerHTML = origLabel;
-        btn.style.background = '';
-        btn.disabled = false;
-        if (note) { note.textContent = 'We\'ll reply within 24 hours. No spam, ever.'; note.style.color = ''; }
-      }, 6000);
-    } else {
-      btn.disabled = false;
-      btn.innerHTML = origLabel;
-      if (note) { note.textContent = 'Something went wrong. Please email elitetkdscot@gmail.com directly.'; note.style.color = '#e8192e'; }
-    }
-  } catch(err) {
-    btn.disabled = false;
-    btn.innerHTML = origLabel;
-    if (note) { note.textContent = 'Network error — please try again.'; note.style.color = '#e8192e'; }
-  }
-}
 
 // ── Show a banner error inside a form ──
 function showFormError(form, message) {
