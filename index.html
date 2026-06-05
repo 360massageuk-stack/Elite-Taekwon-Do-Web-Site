@@ -693,7 +693,6 @@
     .section-inner { padding: 3.5rem 1.5rem; }
   }
 
-  /* ─── Mobile 540px — Samsung Galaxy / iPhone standard ─── */
   @media (max-width: 540px) {
     /* Hero text */
     .hero-top { padding: 1.75rem 1.25rem 1.5rem; }
@@ -895,6 +894,15 @@
     font-size: 0.85rem; color: var(--off-white); line-height: 1.5;
   }
   .form-error-banner a { color: var(--red); }
+
+  /* ─── APP SECTION RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .app-features-grid { grid-template-columns: 1fr 1fr !important; }
+    .app-pricing-grid  { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 480px) {
+    .app-features-grid { grid-template-columns: 1fr !important; }
+  }
 
 </style>
 </head>
@@ -1698,171 +1706,206 @@
 
 <section id="shop">
   <div class="section-inner">
-    <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;">
+
+    <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:2.5rem;">
       <div>
-        <div class="section-label">Elite TKD Store</div>
-        <h2 class="section-title">OFFICIAL<br><span class="red">SHOP</span></h2>
-        <p style="color:var(--gray);font-size:0.9rem;max-width:500px;">Official club equipment and merchandise. All orders processed securely through the Elite TKD online store.</p>
+        <div class="section-label">Official Club Store</div>
+        <h2 class="section-title">ELITE TKD<br><span class="red">SHOP</span></h2>
+        <p style="color:var(--gray);font-size:0.95rem;max-width:520px;">Everything you need for training — uniforms, protection, grading equipment and club clothing. All items available through the secure Elite TKD online store.</p>
       </div>
       <a href="https://www.elitetkd.uk/online-store" target="_blank" class="btn-red" style="margin-bottom:0.75rem;flex-shrink:0;">Visit Full Store →</a>
     </div>
 
+    <!-- Product category cards -->
     <div class="shop-grid reveal" style="transition-delay:0.1s">
 
-      <!-- Dobok -->
       <div class="shop-card">
         <div class="shop-img" style="font-size:3.5rem;">🥋</div>
         <div class="shop-info">
           <div class="shop-category">Uniforms</div>
-          <h4>Dobok (Uniform)</h4>
-          <p class="shop-desc">Official ITF Taekwon-Do training uniform. Available in all sizes from age 3 to adult.</p>
+          <h4>Doboks</h4>
+          <p class="shop-desc">Official ITF Taekwon-Do Doboks for all ages and grades. Available in white student and black instructor styles. Sizes from age 3 to adult.</p>
           <div class="shop-price-row">
             <div class="shop-price">From £45</div>
-            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Buy Now →</a>
+            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Shop Now →</a>
           </div>
         </div>
       </div>
 
-      <!-- Sparring -->
       <div class="shop-card">
         <div class="shop-img" style="font-size:3.5rem;">🥊</div>
         <div class="shop-info">
           <div class="shop-category">Protection</div>
           <h4>Sparring Equipment</h4>
-          <p class="shop-desc">ITF approved sparring gear including gloves, shin guards, foot protectors and head guards.</p>
+          <p class="shop-desc">ITF approved sparring gear — gloves, shin guards, foot protectors, head guards and body armour. Required for grading from blue belt onwards.</p>
           <div class="shop-price-row">
             <div class="shop-price">From £30</div>
-            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Buy Now →</a>
+            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Shop Now →</a>
           </div>
         </div>
       </div>
 
-      <!-- Belts -->
-      <div class="shop-card">
-        <div class="shop-img" style="font-size:3.5rem;">🎽</div>
-        <div class="shop-info">
-          <div class="shop-category">Grading</div>
-          <h4>Belts &amp; Grading Fees</h4>
-          <p class="shop-desc">Replacement belts for all grades, plus grading examination fees paid securely online.</p>
-          <div class="shop-price-row">
-            <div class="shop-price">From £8</div>
-            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Buy Now →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Merchandise -->
       <div class="shop-card">
         <div class="shop-img" style="font-size:3.5rem;">👕</div>
         <div class="shop-info">
-          <div class="shop-category">Merchandise</div>
-          <h4>Club Merchandise</h4>
-          <p class="shop-desc">Elite Scotland TKD branded hoodies, t-shirts, bags and accessories. Show your club pride.</p>
+          <div class="shop-category">Clothing</div>
+          <h4>Club Clothing</h4>
+          <p class="shop-desc">Elite Scotland TKD branded hoodies, t-shirts, tracksuit tops and kit bags. Perfect for training, travel and showing your club colours.</p>
           <div class="shop-price-row">
             <div class="shop-price">From £18</div>
-            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Buy Now →</a>
+            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop-card">
+        <div class="shop-img" style="font-size:3.5rem;">🪪</div>
+        <div class="shop-info">
+          <div class="shop-category">Licences &amp; Grading</div>
+          <h4>Licences &amp; Belts</h4>
+          <p class="shop-desc">Annual ITF Scotland licences, replacement belts for all grades, and grading examination fees. All students require a valid licence to train and compete.</p>
+          <div class="shop-price-row">
+            <div class="shop-price">From £8</div>
+            <a href="https://www.elitetkd.uk/online-store" target="_blank" class="shop-btn">Shop Now →</a>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- Full store CTA -->
-    <div style="margin-top:2rem;text-align:center;">
-      <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1rem;">Browse the full range including protective gear sets, club bags, and seasonal items.</p>
-      <a href="https://www.elitetkd.uk/online-store" target="_blank" class="btn-outline" style="display:inline-flex;">Browse Full Store at elitetkd.uk →</a>
+    <!-- Browse CTA -->
+    <div style="margin-top:2.5rem;background:var(--navy-light);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:0.3rem;">Full Range Available Online</div>
+        <p style="font-size:0.9rem;color:var(--off-white);">Browse the complete store for protective gear sets, sparring pads, bags, and seasonal items. Secure checkout via the Elite TKD website.</p>
+      </div>
+      <a href="https://www.elitetkd.uk/online-store" target="_blank" class="btn-red" style="white-space:nowrap;flex-shrink:0;">Browse Full Store →</a>
     </div>
+
   </div>
 </section>
 
 <!-- ═══════════════ TKD APP ═══════════════ -->
-<section id="app">
+<section id="app" style="background:var(--navy-mid);">
   <div class="section-inner">
-    <div class="app-inner reveal">
 
-      <!-- Left: features -->
-      <div>
-        <div class="section-label">Digital Training Tool</div>
-        <h2 class="section-title">THE ELITE<br><span class="red">TKD APP</span></h2>
-        <p style="color:var(--off-white);font-size:1.05rem;line-height:1.75;margin-bottom:1.5rem;opacity:0.9;">Your complete Taekwon-Do companion — available on iOS and Android. Train smarter, grade faster, and stay connected to your club.</p>
+    <div class="reveal" style="text-align:center;max-width:700px;margin:0 auto 3.5rem;">
+      <div class="section-label" style="justify-content:center;">Train Smarter</div>
+      <h2 class="section-title">THE ELITE<br><span class="red">TKD APP</span></h2>
+      <p style="color:var(--off-white);font-size:1.05rem;line-height:1.75;opacity:0.9;">Your complete Taekwon-Do training companion — designed by Master Dutton for Elite Scotland students. Everything you need to train, grade and improve, right in your pocket.</p>
+    </div>
 
-        <div style="display:flex;flex-direction:column;gap:0.7rem;margin-bottom:2rem;">
-          <div style="display:flex;align-items:flex-start;gap:0.85rem;font-size:0.92rem;color:var(--off-white);">
-            <span style="color:var(--red);font-weight:700;font-size:1rem;flex-shrink:0;margin-top:1px;">✓</span>
-            <span><strong style="color:var(--white);">Pattern library</strong> — full Tul video breakdowns with step-by-step instructions for every belt level</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:0.85rem;font-size:0.92rem;color:var(--off-white);">
-            <span style="color:var(--red);font-weight:700;font-size:1rem;flex-shrink:0;margin-top:1px;">✓</span>
-            <span><strong style="color:var(--white);">Grading syllabus</strong> — full ITF curriculum organised by belt grade, always up to date</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:0.85rem;font-size:0.92rem;color:var(--off-white);">
-            <span style="color:var(--red);font-weight:700;font-size:1rem;flex-shrink:0;margin-top:1px;">✓</span>
-            <span><strong style="color:var(--white);">Class timetables</strong> — live schedules across all Elite Scotland locations</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:0.85rem;font-size:0.92rem;color:var(--off-white);">
-            <span style="color:var(--red);font-weight:700;font-size:1rem;flex-shrink:0;margin-top:1px;">✓</span>
-            <span><strong style="color:var(--white);">Competitions &amp; events</strong> — upcoming events, entry deadlines and results</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:0.85rem;font-size:0.92rem;color:var(--off-white);">
-            <span style="color:var(--red);font-weight:700;font-size:1rem;flex-shrink:0;margin-top:1px;">✓</span>
-            <span><strong style="color:var(--white);">Direct contact</strong> — message Master Divine and the instructors directly through the app</span>
-          </div>
-        </div>
+    <!-- Feature grid -->
+    <div class="reveal app-features-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:3rem;">
 
-        <!-- Download buttons -->
-        <div class="app-store-btns">
-          <a href="https://www.elitetkd.uk/taekwondotrainingapp" target="_blank" class="store-btn">
-            <span class="store-btn-icon">🍎</span>
-            <span><span class="store-btn-label">Download on the</span><span class="store-btn-name">App Store</span></span>
-          </a>
-          <a href="https://www.elitetkd.uk/taekwondotrainingapp" target="_blank" class="store-btn">
-            <span class="store-btn-icon">🤖</span>
-            <span><span class="store-btn-label">Get it on</span><span class="store-btn-name">Google Play</span></span>
-          </a>
-        </div>
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🥋</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">Patterns</div>
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Full video library of all ITF patterns (Tuls) from white belt to black belt. Step-by-step breakdowns with Master Dutton.</p>
       </div>
 
-      <!-- Right: subscription card -->
-      <div class="app-phone-visual">
-        <div class="app-sub-card">
-          <div class="app-sub-card-top">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:0.2em;color:var(--red);margin-bottom:0.5rem;">APP SUBSCRIPTION</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--white);line-height:1;letter-spacing:0.03em;">ELITE<br><span style="color:var(--red);">TKD</span> APP</div>
-            <div style="margin-top:1rem;font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);">Monthly Subscription</div>
-          </div>
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">📖</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">Theory</div>
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Complete grading theory for every belt level. History, philosophy and rules of Taekwon-Do — all in one place.</p>
+      </div>
 
-          <div style="padding:1.5rem;display:flex;flex-direction:column;gap:0.6rem;">
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--off-white);">
-              <span style="color:var(--red);font-size:0.9rem;">✓</span> Full pattern video library
-            </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--off-white);">
-              <span style="color:var(--red);font-size:0.9rem;">✓</span> Complete grading syllabus
-            </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--off-white);">
-              <span style="color:var(--red);font-size:0.9rem;">✓</span> Live class timetables
-            </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--off-white);">
-              <span style="color:var(--red);font-size:0.9rem;">✓</span> Events &amp; competition calendar
-            </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--off-white);">
-              <span style="color:var(--red);font-size:0.9rem;">✓</span> iOS &amp; Android
-            </div>
-          </div>
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🇰🇷</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">Terminology</div>
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Korean terminology for all techniques, commands and counting — essential for grading examinations.</p>
+      </div>
 
-          <div style="padding:0 1.5rem 1.75rem;">
-            <!-- REPLACE this href with your Wix subscription URL when ready -->
-            <a href="https://www.elitetkd.uk/pricing-plans/plans-pricing"
-               target="_blank"
-               class="btn-red"
-               style="display:flex;justify-content:center;width:100%;clip-path:none;border-radius:6px;font-size:1rem;padding:1rem;">
-              📱 Subscribe to the TKD App
-            </a>
-            <p style="font-size:0.75rem;color:var(--gray);text-align:center;margin-top:0.75rem;line-height:1.5;">Subscription managed securely through the Elite TKD website. Cancel anytime.</p>
-          </div>
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🎬</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">Video Tutorials</div>
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Technique videos covering kicks, stances, hand techniques and self-defence combinations. Watch anywhere, anytime.</p>
+      </div>
+
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🧘</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">Flexibility Training</div>
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Structured stretching and flexibility routines to improve your kicking height and prevent injury.</p>
+      </div>
+
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.2);border-radius:6px;padding:1.5rem;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🏆</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">Competition Support</div>
+        <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Competition prep guides, event calendars, entry forms and training plans to peak at the right time.</p>
+      </div>
+
+    </div>
+
+    <!-- Ask Master Dutton highlight -->
+    <div class="reveal" style="background:linear-gradient(135deg,rgba(200,16,46,0.12) 0%,rgba(200,16,46,0.04) 100%);border:1px solid rgba(200,16,46,0.3);border-radius:8px;padding:2rem 2.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:3rem;">
+      <div style="font-size:3rem;flex-shrink:0;">🥋</div>
+      <div style="flex:1;min-width:200px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.3rem;">Ask Master Dutton</div>
+        <p style="font-size:0.95rem;color:var(--off-white);line-height:1.65;opacity:0.9;">Got a question about a technique, a pattern, or your training? Submit your question directly through the app and get a personal response from Master Dutton — 8th Dan Black Belt.</p>
+      </div>
+    </div>
+
+    <!-- Pricing + Subscribe -->
+    <div class="reveal app-pricing-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+
+      <!-- Left: pricing -->
+      <div style="background:var(--navy);border:1px solid rgba(200,16,46,0.25);border-radius:8px;padding:2.5rem;">
+        <div style="font-family:'Oswald',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;">Subscription Pricing</div>
+        <div style="display:flex;align-items:baseline;gap:0.3rem;margin-bottom:0.4rem;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--white);">£</span>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--red);line-height:1;letter-spacing:-0.02em;">3.99</span>
+          <span style="font-size:1rem;color:var(--gray);margin-left:0.2rem;">/ month</span>
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(200,16,46,0.15);border:1px solid rgba(200,16,46,0.35);border-radius:20px;padding:0.4rem 1rem;margin-bottom:1.5rem;">
+          <span style="color:var(--red);font-weight:700;">★</span>
+          <span style="font-family:'Oswald',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--off-white);">7 Day Free Trial</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.75rem;">
+          <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--off-white);"><span style="color:var(--red);">✓</span> Full access to all content</div>
+          <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--off-white);"><span style="color:var(--red);">✓</span> iOS &amp; Android</div>
+          <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--off-white);"><span style="color:var(--red);">✓</span> Cancel anytime</div>
+          <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--off-white);"><span style="color:var(--red);">✓</span> New content added regularly</div>
+        </div>
+        <!-- Replace with your direct Wix subscription URL when ready -->
+        <a href="https://www.elitetkd.uk/pricing-plans/plans-pricing"
+           target="_blank"
+           class="btn-red"
+           style="display:flex;justify-content:center;clip-path:none;border-radius:6px;font-size:1rem;padding:1rem 1.5rem;box-shadow:0 6px 25px rgba(200,16,46,0.5);">
+          📱 Start Free Trial — Subscribe Now
+        </a>
+        <p style="font-size:0.75rem;color:var(--gray);text-align:center;margin-top:0.75rem;">7 days free, then £3.99/month. Cancel anytime.</p>
+      </div>
+
+      <!-- Right: what students say / extra info -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        <div style="background:var(--navy);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:1.5rem;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.5rem;">Perfect for Students</div>
+          <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Whether you're a white belt just starting out or a black belt refining your technique — the app supports every stage of your Taekwon-Do journey.</p>
+        </div>
+        <div style="background:var(--navy);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:1.5rem;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.5rem;">Train Between Classes</div>
+          <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">Reinforce what you learn in class by watching patterns and techniques in your own time. Students who use the app progress faster.</p>
+        </div>
+        <div style="background:var(--navy);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:1.5rem;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;color:var(--white);margin-bottom:0.5rem;">Built by Master Dutton</div>
+          <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;">All content is created and personally delivered by Master Dutton, 8th Dan Black Belt — so you know the information is accurate and taught correctly.</p>
         </div>
       </div>
 
     </div>
+
+    <!-- Download store buttons -->
+    <div class="reveal" style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,0.07);">
+      <a href="https://www.elitetkd.uk/taekwondotrainingapp" target="_blank" class="store-btn">
+        <span class="store-btn-icon">🍎</span>
+        <span><span class="store-btn-label">Download on the</span><span class="store-btn-name">App Store</span></span>
+      </a>
+      <a href="https://www.elitetkd.uk/taekwondotrainingapp" target="_blank" class="store-btn">
+        <span class="store-btn-icon">🤖</span>
+        <span><span class="store-btn-label">Get it on</span><span class="store-btn-name">Google Play</span></span>
+      </a>
+    </div>
+
   </div>
 </section>
 
