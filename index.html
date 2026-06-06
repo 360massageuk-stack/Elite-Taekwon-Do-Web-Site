@@ -2940,29 +2940,26 @@ function renderCart() {
   badgeEl.textContent = cart.length;
   badgeEl.style.display = 'flex';
   checkoutBtn.disabled = false;
+
+  // Update PayPal link with correct amount
+  var ppLink = document.getElementById('cart-checkout-btn');
+  if (ppLink) ppLink.href = 'https://www.paypal.me/153301/' + total.toFixed(2);
 }
 
 function checkoutPayPal() {
+  // Navigation handled by the <a> href — this just sends the order email
   if (cart.length === 0) return;
-
   var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
   var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
-  var itemNames = cart.map(function(i){ return i.name + (i.size ? ' ' + i.size : ''); }).join(', ');
-
-  // Send order notification to elitetkdscot@gmail.com
   var formData = new FormData();
   formData.append('form_type', 'Shop Order');
   formData.append('_subject', 'Elite TKD Shop Order — £' + total.toFixed(2));
   formData.append('_replyto', NOTIFY_EMAIL);
   formData.append('order_items', items.join(' | '));
   formData.append('order_total', '£' + total.toFixed(2));
-  formData.append('message', 'New order: ' + itemNames + ' | Total: £' + total.toFixed(2));
   fetch('https://formspree.io/f/mykazerd', {
     method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
   });
-
-  // Go straight to PayPal.me
-  window.location.href = 'https://www.paypal.me/153301/' + total.toFixed(2);
 }
 
 function showToast(msg) {
@@ -6874,11 +6871,12 @@ IECAKgIAcujgvvRQAACV91Vk/DjdtmECAK4QIebW3V5ymL9y++VqGAejxpWgQIAoA9HjStDjHRVv71oE
       <span class="cart-total-amount" id="cart-total">£0.00</span>
     </div>
 
-    <button class="shop-buy-btn" id="cart-checkout-btn"
-      style="font-size:1rem;padding:1rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;border-radius:6px;width:100%;border:none;cursor:pointer;"
-      onclick="checkoutPayPal()">
+    <a id="cart-checkout-btn"
+      href="https://www.paypal.me/153301"
+      target="_blank"
+      style="display:block;text-align:center;background:var(--red);color:white;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:1rem;border-radius:6px;margin-bottom:0.75rem;">
       💳 Pay with PayPal
-    </button>
+    </a>
 
     <p class="cart-checkout-note">
       Clicking Pay with PayPal will open a secure PayPal payment page.<br>
