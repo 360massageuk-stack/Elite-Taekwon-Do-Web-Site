@@ -2875,6 +2875,8 @@ function openCart() {
   document.getElementById('cart-drawer').classList.add('open');
   document.getElementById('cart-backdrop').classList.add('open');
   document.body.style.overflow = 'hidden';
+  // Load PayPal button when cart opens
+  setTimeout(initPayPalButton, 300);
 }
 function closeCart() {
   document.getElementById('cart-drawer').classList.remove('open');
@@ -2946,13 +2948,10 @@ function renderCart() {
   if (ppLink) ppLink.href = 'https://www.paypal.com/gb/send-money/checkout/login?recipient=elitetkdscot%40gmail.com&amount=' + total.toFixed(2) + '&currencyCode=GBP';
 }
 
-function submitOrder() {
+function submitOrderEmailOnly() {
   if (cart.length === 0) return;
   var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
   var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
-  var itemNames = cart.map(function(i){ return i.name + (i.size ? ' ' + i.size : ''); }).join(', ');
-
-  // Send order email via Formspree
   var formData = new FormData();
   formData.append('form_type', 'Shop Order');
   formData.append('_subject', 'Elite TKD Shop Order — £' + total.toFixed(2));
@@ -2962,20 +2961,67 @@ function submitOrder() {
   formData.append('message', 'New shop order:\n' + items.join('\n') + '\n\nTotal: £' + total.toFixed(2));
   fetch('https://formspree.io/f/mykazerd', {
     method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+  }).then(function(r) {
+    if (r.ok) {
+      showOrderConfirmed();
+    }
   });
+}
 
-  // Go to PayPal using Merchant ID R47VRD7ABPW86
-  var ppUrl = 'https://www.paypal.com/cgi-bin/webscr' +
-    '?cmd=_xclick' +
-    '&business=R47VRD7ABPW86' +
-    '&item_name=' + encodeURIComponent('Elite TKD: ' + itemNames) +
-    '&amount=' + total.toFixed(2) +
-    '&currency_code=GBP' +
-    '&no_shipping=1' +
-    '&return=' + encodeURIComponent('https://360massageuk-stack.github.io/Elite-Taekwon-Do-Web-Site/') +
-    '&cancel_return=' + encodeURIComponent('https://360massageuk-stack.github.io/Elite-Taekwon-Do-Web-Site/');
+function showOrderConfirmed() {
+  document.getElementById('cart-items').innerHTML =
+    '<div style="text-align:center;padding:2rem 1rem;">' +
+    '<div style="font-size:3rem;margin-bottom:1rem;">✅</div>' +
+    '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.8rem;color:white;margin-bottom:0.75rem;">Order Sent!</div>' +
+    '<p style="color:#8899AA;font-size:0.9rem;line-height:1.7;">Your order has been sent to Master Divine.<br>We\'ll be in touch within 24 hours with payment details.<br><br>' +
+    '<strong style="color:white;">elitetkdscot@gmail.com</strong><br>' +
+    '<strong style="color:white;">07590 283735</strong></p>' +
+    '</div>';
+  cart = [];
+  document.getElementById('cart-badge').style.display = 'none';
+}
 
-  window.location.href = ppUrl;
+// PayPal Smart Buttons — loads when cart opens
+// Client ID: get from paypal.com/developer/applications
+var PAYPAL_CLIENT_ID = 'sb'; // replace with your real client ID from developer.paypal.com
+
+function initPayPalButton() {
+  var container = document.getElementById('paypal-button-container');
+  if (!container || container.childElementCount > 0) return;
+  if (cart.length === 0) return;
+  var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
+  var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
+
+  if (typeof paypal === 'undefined') return;
+
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: total.toFixed(2), currency_code: 'GBP' },
+          description: items.join(' | ')
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        // Send order email
+        var formData = new FormData();
+        formData.append('form_type', 'Shop Order — PAID');
+        formData.append('_subject', 'Elite TKD PAID Order — £' + total.toFixed(2));
+        formData.append('_replyto', NOTIFY_EMAIL);
+        formData.append('order_items', items.join(' | '));
+        formData.append('order_total', '£' + total.toFixed(2));
+        formData.append('paypal_name', details.payer.name.given_name + ' ' + details.payer.name.surname);
+        formData.append('message', 'PAYMENT CONFIRMED via PayPal. Payer: ' + details.payer.name.given_name);
+        fetch('https://formspree.io/f/mykazerd', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+        showOrderConfirmed();
+      });
+    },
+    onError: function(err) {
+      console.error('PayPal error', err);
+    }
+  }).render('#paypal-button-container');
 }
 
 
@@ -6888,9 +6934,10 @@ IECAKgIAcujgvvRQAACV91Vk/DjdtmECAK4QIebW3V5ymL9y++VqGAejxpWgQIAoA9HjStDjHRVv71oE
       <span class="cart-total-amount" id="cart-total">£0.00</span>
     </div>
 
-    <button onclick="submitOrder()"
-      style="display:block;width:100%;text-align:center;background:var(--red);color:white;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:1rem;border-radius:6px;margin-bottom:0.75rem;border:none;cursor:pointer;">
-      ✅ Place Order &amp; Pay with PayPal
+    <div id="paypal-button-container" style="margin-bottom:0.75rem;min-height:50px;"></div>
+    <button onclick="submitOrderEmailOnly()"
+      style="display:block;width:100%;text-align:center;background:rgba(255,255,255,0.08);color:white;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.75rem;border-radius:6px;margin-bottom:0.75rem;border:1px solid rgba(255,255,255,0.15);cursor:pointer;">
+      📧 Or: Place Order by Email
     </button>
 
     <p class="cart-checkout-note">
@@ -7592,5 +7639,7 @@ htTAlmMW8hcRZ/kGc2Vim9bsqsTvY4rKwObmVPgF4Bwt03rA//M7Bs1c0K0NfYDoL5+89w9JFIVIAAAA
   if (img && td) img.src = 'data:image/webp;base64,' + td.value.replace(/\s/g,'');
 })();
 </script>
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
 </body>
 </html>
