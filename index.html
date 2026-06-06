@@ -2987,14 +2987,17 @@ var PAYPAL_CLIENT_ID = 'sb'; // replace with your real client ID from developer.
 
 function initPayPalButton() {
   var container = document.getElementById('paypal-button-container');
-  if (!container || container.childElementCount > 0) return;
+  if (!container) return;
   if (cart.length === 0) return;
+  if (typeof paypal === 'undefined') return;
+
+  // Clear and re-render
+  container.innerHTML = '';
   var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
   var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
 
-  if (typeof paypal === 'undefined') return;
-
   paypal.Buttons({
+    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
     createOrder: function(data, actions) {
       return actions.order.create({
         purchase_units: [{
@@ -3005,16 +3008,17 @@ function initPayPalButton() {
     },
     onApprove: function(data, actions) {
       return actions.order.capture().then(function(details) {
-        // Send order email
         var formData = new FormData();
-        formData.append('form_type', 'Shop Order — PAID');
+        formData.append('form_type', 'Shop Order — PAID via PayPal');
         formData.append('_subject', 'Elite TKD PAID Order — £' + total.toFixed(2));
         formData.append('_replyto', NOTIFY_EMAIL);
         formData.append('order_items', items.join(' | '));
         formData.append('order_total', '£' + total.toFixed(2));
-        formData.append('paypal_name', details.payer.name.given_name + ' ' + details.payer.name.surname);
-        formData.append('message', 'PAYMENT CONFIRMED via PayPal. Payer: ' + details.payer.name.given_name);
+        formData.append('paypal_payer', details.payer.name.given_name + ' ' + details.payer.name.surname);
+        formData.append('paypal_email', details.payer.email_address || '');
+        formData.append('message', 'PAYMENT CONFIRMED via PayPal. Payer: ' + details.payer.name.given_name + ' ' + details.payer.name.surname);
         fetch('https://formspree.io/f/mykazerd', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+        cart = [];
         showOrderConfirmed();
       });
     },
@@ -7639,7 +7643,7 @@ htTAlmMW8hcRZ/kGc2Vim9bsqsTvY4rKwObmVPgF4Bwt03rA//M7Bs1c0K0NfYDoL5+89w9JFIVIAAAA
   if (img && td) img.src = 'data:image/webp;base64,' + td.value.replace(/\s/g,'');
 })();
 </script>
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
+<!-- PayPal SDK - Live -->
+<script src="https://www.paypal.com/sdk/js?client-id=BAArGkV7vT_ICPenwKhhK53PvhAYDQbc2p1EddhKiy5cE71kSzlj9wTBqXxlOL4A25_nhF1TQNNal0QyrY&currency=GBP&intent=capture" onload="initPayPalButton()"></script>
 </body>
 </html>
