@@ -2946,21 +2946,38 @@ function renderCart() {
   if (ppLink) ppLink.href = 'https://www.paypal.com/gb/send-money/checkout/login?recipient=elitetkdscot%40gmail.com&amount=' + total.toFixed(2) + '&currencyCode=GBP';
 }
 
-function checkoutPayPal() {
-  // Navigation handled by the <a> href — this just sends the order email
+function submitOrder() {
   if (cart.length === 0) return;
   var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
   var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
+  var itemNames = cart.map(function(i){ return i.name + (i.size ? ' ' + i.size : ''); }).join(', ');
+
+  // Send order email via Formspree
   var formData = new FormData();
   formData.append('form_type', 'Shop Order');
   formData.append('_subject', 'Elite TKD Shop Order — £' + total.toFixed(2));
   formData.append('_replyto', NOTIFY_EMAIL);
   formData.append('order_items', items.join(' | '));
   formData.append('order_total', '£' + total.toFixed(2));
+  formData.append('message', 'New shop order:\n' + items.join('\n') + '\n\nTotal: £' + total.toFixed(2));
   fetch('https://formspree.io/f/mykazerd', {
     method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
   });
+
+  // Go to PayPal using Merchant ID R47VRD7ABPW86
+  var ppUrl = 'https://www.paypal.com/cgi-bin/webscr' +
+    '?cmd=_xclick' +
+    '&business=R47VRD7ABPW86' +
+    '&item_name=' + encodeURIComponent('Elite TKD: ' + itemNames) +
+    '&amount=' + total.toFixed(2) +
+    '&currency_code=GBP' +
+    '&no_shipping=1' +
+    '&return=' + encodeURIComponent('https://360massageuk-stack.github.io/Elite-Taekwon-Do-Web-Site/') +
+    '&cancel_return=' + encodeURIComponent('https://360massageuk-stack.github.io/Elite-Taekwon-Do-Web-Site/');
+
+  window.location.href = ppUrl;
 }
+
 
 function showToast(msg) {
   var t = document.getElementById('cart-toast');
@@ -6871,17 +6888,15 @@ IECAKgIAcujgvvRQAACV91Vk/DjdtmECAK4QIebW3V5ymL9y++VqGAejxpWgQIAoA9HjStDjHRVv71oE
       <span class="cart-total-amount" id="cart-total">£0.00</span>
     </div>
 
-    <a id="cart-checkout-btn"
-      href="https://www.paypal.com/gb/send-money/checkout/login?recipient=elitetkdscot%40gmail.com"
-      target="_blank"
-      style="display:block;text-align:center;background:var(--red);color:white;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:1rem;border-radius:6px;margin-bottom:0.75rem;">
-      💳 Pay with PayPal
-    </a>
+    <button onclick="submitOrder()"
+      style="display:block;width:100%;text-align:center;background:var(--red);color:white;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:1rem;border-radius:6px;margin-bottom:0.75rem;border:none;cursor:pointer;">
+      ✅ Place Order &amp; Pay with PayPal
+    </button>
 
     <p class="cart-checkout-note">
-      Clicking Pay with PayPal will open a secure PayPal payment page.<br>
-      An order confirmation will be sent to <strong style="color:var(--off-white);">elitetkdscot@gmail.com</strong> automatically.<br>
-      Your instructor will deliver your order at the next class.
+      Clicking Place Order sends your order to Master Divine by email.<br>
+      You will receive payment instructions by return email within 24 hours.<br>
+      <strong style="color:var(--off-white);">elitetkdscot@gmail.com · 07590 283735</strong>
     </p>
   </div>
 </div>
