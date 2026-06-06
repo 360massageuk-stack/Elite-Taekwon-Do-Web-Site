@@ -2949,35 +2949,20 @@ function checkoutPayPal() {
   var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
   var itemNames = cart.map(function(i){ return i.name + (i.size ? ' ' + i.size : ''); }).join(', ');
 
-  // PayPal.me — customer pays exact amount, order details shown on page
-  // Format: paypal.me/USERNAME/AMOUNT/GBP
-  // TODO: replace 'elitetkdscotland' with your actual paypal.me username
-  var ppUrl = 'https://www.paypal.com/paypalme/153301/' + total.toFixed(2) + 'GBP';
-
-  // Show order confirmation panel before redirecting
-  var confirmed = confirm(
-    'Order Summary:\n\n' +
-    items.join('\n') +
-    '\n\nTotal: £' + total.toFixed(2) +
-    '\n\nClick OK to pay securely with PayPal.'
-  );
-
-  if (!confirmed) return;
-
-  // Send order notification to elitetkdscot@gmail.com via Formspree
+  // Send order notification to elitetkdscot@gmail.com
   var formData = new FormData();
   formData.append('form_type', 'Shop Order');
   formData.append('_subject', 'Elite TKD Shop Order — £' + total.toFixed(2));
   formData.append('_replyto', NOTIFY_EMAIL);
   formData.append('order_items', items.join(' | '));
   formData.append('order_total', '£' + total.toFixed(2));
-  formData.append('message', 'New order from Elite TKD website. Items: ' + itemNames + '. Total: £' + total.toFixed(2) + '. Customer proceeding to PayPal.');
+  formData.append('message', 'New order: ' + itemNames + ' | Total: £' + total.toFixed(2));
   fetch('https://formspree.io/f/mykazerd', {
     method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
   });
 
-  // Go to PayPal
-  window.location.href = ppUrl;
+  // Go straight to PayPal.me
+  window.location.href = 'https://www.paypal.me/153301/' + total.toFixed(2);
 }
 
 function showToast(msg) {
@@ -6889,11 +6874,10 @@ IECAKgIAcujgvvRQAACV91Vk/DjdtmECAK4QIebW3V5ymL9y++VqGAejxpWgQIAoA9HjStDjHRVv71oE
       <span class="cart-total-amount" id="cart-total">£0.00</span>
     </div>
 
-    <!-- PayPal checkout button -->
     <button class="shop-buy-btn" id="cart-checkout-btn"
-      style="font-size:1rem;padding:1rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;border-radius:6px;"
-      onclick="checkoutPayPal()" disabled>
-      Pay with PayPal →
+      style="font-size:1rem;padding:1rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;border-radius:6px;width:100%;border:none;cursor:pointer;"
+      onclick="checkoutPayPal()">
+      💳 Pay with PayPal
     </button>
 
     <p class="cart-checkout-note">
