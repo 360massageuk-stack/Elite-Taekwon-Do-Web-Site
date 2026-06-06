@@ -2945,36 +2945,39 @@ function renderCart() {
 function checkoutPayPal() {
   if (cart.length === 0) return;
 
-  var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' x1 = £' + i.price.toFixed(2); });
+  var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
   var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
-  var orderNote = 'Elite TKD Order: ' + items.join(', ') + ' | Total: £' + total.toFixed(2);
   var itemNames = cart.map(function(i){ return i.name + (i.size ? ' ' + i.size : ''); }).join(', ');
 
-  var ppUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
-    'cmd=_xclick' +
-    '&business=' + encodeURIComponent(PAYPAL_EMAIL) +
-    '&currency_code=GBP' +
-    '&item_name=' + encodeURIComponent('Elite TKD: ' + itemNames) +
-    '&amount=' + total.toFixed(2) +
-    '&custom=' + encodeURIComponent(orderNote) +
-    '&return=' + encodeURIComponent('https://360massageuk-stack.github.io/Elite-Taekwon-Do-Web-Site/') +
-    '&cancel_return=' + encodeURIComponent('https://360massageuk-stack.github.io/Elite-Taekwon-Do-Web-Site/') +
-    '&no_shipping=1';
+  // PayPal.me — customer pays exact amount, order details shown on page
+  // Format: paypal.me/USERNAME/AMOUNT/GBP
+  // TODO: replace 'elitetkdscotland' with your actual paypal.me username
+  var ppUrl = 'https://www.paypal.com/paypalme/153301/' + total.toFixed(2) + 'GBP';
 
-  // Open PayPal FIRST — must happen in direct user click context or browser blocks it
-  window.location.href = ppUrl;
+  // Show order confirmation panel before redirecting
+  var confirmed = confirm(
+    'Order Summary:\n\n' +
+    items.join('\n') +
+    '\n\nTotal: £' + total.toFixed(2) +
+    '\n\nClick OK to pay securely with PayPal.'
+  );
 
-  // Send order notification email to elitetkdscot@gmail.com via Formspree (fire and forget)
+  if (!confirmed) return;
+
+  // Send order notification to elitetkdscot@gmail.com via Formspree
   var formData = new FormData();
   formData.append('form_type', 'Shop Order');
   formData.append('_subject', 'Elite TKD Shop Order — £' + total.toFixed(2));
   formData.append('_replyto', NOTIFY_EMAIL);
   formData.append('order_items', items.join(' | '));
   formData.append('order_total', '£' + total.toFixed(2));
-  formData.append('message', 'New order placed on the Elite TKD website. Customer proceeding to PayPal payment.');
+  formData.append('message', 'New order from Elite TKD website. Items: ' + itemNames + '. Total: £' + total.toFixed(2) + '. Customer proceeding to PayPal.');
   fetch('https://formspree.io/f/mykazerd', {
     method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
   });
+
+  // Go to PayPal
+  window.location.href = ppUrl;
 }
 
 function showToast(msg) {
