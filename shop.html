@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Scotland TKD Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root { --red:#C8102E; --navy:#0A1628; --navy2:#0D1F3C; --white:#fff; --gray:#8899AA; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--navy);color:var(--white);font-family:'Barlow',sans-serif;}
+nav{background:var(--navy2);border-bottom:2px solid var(--red);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+nav a{color:var(--white);text-decoration:none;font-family:'Oswald',sans-serif;letter-spacing:0.1em;}
+nav .back{display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;opacity:0.8;}
+nav .back:hover{opacity:1;color:var(--red);}
+nav h1{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.1em;}
+nav h1 span{color:var(--red);}
+
+.container{max-width:1100px;margin:0 auto;padding:2rem;}
+h2{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:0.05em;margin-bottom:0.25rem;}
+h2 span{color:var(--red);}
+.subtitle{color:var(--gray);margin-bottom:2rem;}
+
+.tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+.tab{background:transparent;color:var(--gray);border:1px solid rgba(255,255,255,0.15);font-family:'Oswald',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 1.25rem;cursor:pointer;border-radius:3px;transition:all 0.2s;}
+.tab.active,.tab:hover{background:var(--red);color:var(--white);border-color:var(--red);}
+
+.panel{display:none;}
+.panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+
+.card{background:var(--navy2);border:1px solid rgba(255,255,255,0.08);border-radius:8px;overflow:hidden;transition:transform 0.2s,border-color 0.2s;}
+.card:hover{transform:translateY(-4px);border-color:rgba(200,16,46,0.4);}
+.card-img{height:240px;overflow:hidden;background:#142447;}
+.card-img img{width:100%;height:100%;object-fit:cover;}
+.card-img .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;}
+.card-body{padding:1.25rem;}
+.card-cat{font-family:'Oswald',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:0.25rem;}
+.card-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.04em;margin-bottom:0.5rem;}
+.card-desc{font-size:0.85rem;color:var(--gray);line-height:1.6;margin-bottom:0.75rem;}
+.card-price{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--red);margin-bottom:0.75rem;}
+.size-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;}
+.size-label{font-family:'Oswald',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);flex-shrink:0;}
+.size-select{flex:1;background:var(--navy);border:1px solid rgba(255,255,255,0.15);color:var(--white);font-family:'Barlow',sans-serif;font-size:0.9rem;padding:0.6rem;border-radius:3px;outline:none;-webkit-appearance:none;}
+.size-select:focus{border-color:var(--red);}
+.add-btn{width:100%;background:var(--red);color:var(--white);border:none;font-family:'Oswald',sans-serif;font-weight:700;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem;border-radius:4px;cursor:pointer;transition:background 0.2s;}
+.add-btn:hover{background:#e8192e;}
+
+/* CART */
+#cart-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:900;background:var(--red);color:var(--white);width:60px;height:60px;border-radius:50%;border:none;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(200,16,46,0.6);}
+#cart-badge{position:absolute;top:-4px;right:-4px;background:var(--white);color:var(--red);border-radius:50%;width:20px;height:20px;font-size:0.7rem;font-weight:bold;display:none;align-items:center;justify-content:center;}
+#cart-back{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:901;display:none;}
+#cart-back.open{display:block;}
+#cart-box{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100vw;background:var(--navy2);z-index:902;transform:translateX(100%);transition:transform 0.3s;display:flex;flex-direction:column;border-left:2px solid var(--red);}
+#cart-box.open{transform:translateX(0);}
+#cart-head{padding:1.5rem;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+#cart-head h3{margin:0;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.05em;}
+#cart-close{background:none;border:none;color:var(--white);font-size:1.3rem;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+#cart-close:hover{background:var(--red);}
+#cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem;}
+#cart-foot{padding:1.5rem;border-top:1px solid rgba(255,255,255,0.1);flex-shrink:0;background:var(--navy);}
+.total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.25rem;}
+.total-label{font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);}
+.total-amount{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--white);}
+.order-btn{width:100%;background:var(--red);color:var(--white);border:none;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem;border-radius:4px;cursor:pointer;transition:background 0.2s;}
+.order-btn:hover{background:#e8192e;}
+.order-note{font-size:0.78rem;color:var(--gray);text-align:center;margin-top:0.75rem;line-height:1.5;}
+.cart-item{display:flex;align-items:flex-start;justify-content:space-between;padding:0.85rem 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+.cart-item-name{font-family:'Oswald',sans-serif;font-size:0.9rem;color:var(--white);}
+.cart-item-size{font-size:0.78rem;color:var(--gray);margin-top:0.15rem;}
+.cart-item-price{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--red);}
+.cart-remove{background:none;border:none;color:var(--gray);cursor:pointer;font-size:1rem;padding:0.2rem;flex-shrink:0;}
+.cart-remove:hover{color:var(--red);}
+.empty-msg{text-align:center;padding:3rem 1rem;color:var(--gray);font-size:0.95rem;line-height:1.7;}
+.empty-icon{font-size:3rem;display:block;margin-bottom:1rem;}
+
+@media(max-width:600px){
+  .panel.active{grid-template-columns:1fr;}
+  #cart-box{width:100vw;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back">← Back to Elite TKD</a>
+  <h1>ELITE <span>TKD</span> SHOP</h1>
+  <span style="color:var(--gray);font-size:0.85rem;">Official Store</span>
+</nav>
+
+<div class="container">
+  <h2>OFFICIAL <span>SHOP</span></h2>
+  <p class="subtitle">Official Elite Scotland Taekwon-Do equipment and clothing. Select your size and add to cart.</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('uniforms',this)">🥋 Uniforms</button>
+    <button class="tab" onclick="showTab('equipment',this)">🥊 Equipment</button>
+    <button class="tab" onclick="showTab('clothing',this)">👕 Clothing</button>
+    <button class="tab" onclick="showTab('books',this)">📚 Books</button>
+    <button class="tab" onclick="showTab('licences',this)">🪪 Licences</button>
+  </div>
+
+  <!-- UNIFORMS -->
+  <div id="tab-uniforms" class="panel active">
+
+    <div class="card">
+      <div class="card-img"><img id="ninja-img" src="fbelitebanner.png" alt="Ninja Suit" onerror="this.parentElement.innerHTML='<div class=placeholder>🥋</div>'"></div>
+      <div class="card-body">
+        <div class="card-cat">Ninja Kickers · Ages 3–7</div>
+        <div class="card-name">Elite Ninja Suit</div>
+        <p class="card-desc">Official Elite Ninja Kickers suit — black with club badge and Ninja Kickers embroidery. Made in UK.</p>
+        <div class="card-price">£40.00</div>
+        <div class="size-row">
+          <span class="size-label">Size</span>
+          <select class="size-select" id="ninja-size">
+            <option value="">Please choose…</option>
+            <option>100cm</option>
+            <option>110cm</option>
+            <option>120cm</option>
+          </select>
+        </div>
+        <button class="add-btn" onclick="addToCart('Elite Ninja Suit', 40, 'ninja-size')">Add to Cart 🛒</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"><img id="dobok-img" alt="Elite Dobok" onerror="this.parentElement.innerHTML='<div class=placeholder>🥋</div>'"></div>
+      <div class="card-body">
+        <div class="card-cat">Student Uniform · All Ages</div>
+        <div class="card-name">Elite Dobok (Uniform)</div>
+        <p class="card-desc">Official Elite Scotland Dobok, fully embroidered with club badge. Includes white belt for beginners.</p>
+        <div class="card-price">£60.00</div>
+        <div class="size-row">
+          <span class="size-label">Size</span>
+          <select class="size-select" id="dobok-size">
+            <option value="">Please choose…</option>
+            <option>000 (110cm)</option><option>00 (120cm)</option><option>0 (130cm)</option>
+            <option>1 (140cm)</option><option>2 (150cm)</option><option>3 (160cm)</option>
+            <option>4 (170cm)</option><option>5 (180cm)</option><option>6 (190cm)</option>
+          </select>
+        </div>
+        <button class="add-btn" onclick="addToCart('Elite Dobok', 60, 'dobok-size')">Add to Cart 🛒</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"><img id="bb-img" alt="Black Belt Dobok" onerror="this.parentElement.innerHTML='<div class=placeholder>🥋</div>'"></div>
+      <div class="card-body">
+        <div class="card-cat">Black Belt Uniform · 1st–3rd Dan</div>
+        <div class="card-name">Elite Uniform Do Bok I-III Degree</div>
+        <p class="card-desc">Official black collar Dobok for 1st, 2nd and 3rd Dan Black Belts, fully embroidered with club badge.</p>
+        <div class="card-price">£70.00</div>
+        <div class="size-row">
+          <span class="size-label">Size</span>
+          <select class="size-select" id="bb-size">
+            <option value="">Please choose…</option>
+            <option>000 (110cm)</option><option>00 (120cm)</option><option>0 (130cm)</option>
+            <option>1 (140cm)</option><option>2 (150cm)</option><option>3 (160cm)</option>
+            <option>4 (170cm)</option><option>5 (180cm)</option><option>6 (190cm)</option>
+          </select>
+        </div>
+        <button class="add-btn" onclick="addToCart('Elite Uniform Do Bok I-III Degree', 70, 'bb-size')">Add to Cart 🛒</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EQUIPMENT -->
+  <div id="tab-equipment" class="panel">
+    <div class="card">
+      <div class="card-img"><img id="hg-img" alt="Head Guard" onerror="this.parentElement.innerHTML='<div class=placeholder>🥊</div>'"></div>
+      <div class="card-body">
+        <div class="card-cat">Protection · Required from Blue Belt</div>
+        <div class="card-name">Blitz Dipped Foam Head Guard</div>
+        <p class="card-desc">Dipped foam protection for forehead, ears and rear of head. Air holes throughout. Velcro chin fastening. Approved for ITF competitions.<br><br><small style="color:var(--gray);">Size guide: Small 50–54cm · Medium 54–56cm · Large 56–58cm</small></p>
+        <div class="card-price">£31.00</div>
+        <div class="size-row">
+          <span class="size-label">Size</span>
+          <select class="size-select" id="hg-size">
+            <option value="">Please choose…</option>
+            <option>Small (50-54cm)</option>
+            <option>Medium (54-56cm)</option>
+            <option>Large (56-58cm)</option>
+          </select>
+        </div>
+        <div class="size-row">
+          <span class="size-label">Colour</span>
+          <select class="size-select" id="hg-colour" onchange="switchHG(this.value)">
+            <option value="">Please choose…</option>
+            <option>Red</option>
+            <option>Blue</option>
+          </select>
+        </div>
+        <button class="add-btn" onclick="addToCartMulti('Blitz Head Guard', 31, [['hg-size','Size'],['hg-colour','Colour']])">Add to Cart 🛒</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOTHING -->
+  <div id="tab-clothing" class="panel">
+    <div class="card">
+      <div class="card-img"><div class="placeholder">👕</div></div>
+      <div class="card-body">
+        <div class="card-cat">Club Clothing</div>
+        <div class="card-name">Elite TKD Hoodies &amp; T-Shirts</div>
+        <p class="card-desc">Elite Scotland TKD branded hoodies, t-shirts and kit bags.</p>
+        <div class="card-price">From £18</div>
+        <a href="https://www.elitetkd.uk/online-store" target="_blank" class="add-btn" style="display:block;text-align:center;text-decoration:none;">Browse Store →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKS -->
+  <div id="tab-books" class="panel">
+    <div class="card">
+      <div class="card-img"><div class="placeholder">📖</div></div>
+      <div class="card-body">
+        <div class="card-cat">Book · by Master Dutton</div>
+        <div class="card-name">Psychology of Sparring</div>
+        <p class="card-desc" style="font-style:italic;color:rgba(255,255,255,0.8);margin-bottom:0.5rem;">Mental Strategies for Taekwon-Do Sparring</p>
+        <p class="card-desc">Master the mental game. Psychological strategies, focus techniques and mindset training for competitive sparring.</p>
+        <div class="card-price">£20.00</div>
+        <button class="add-btn" onclick="addToCart('Psychology of Sparring', 20, null)">Add to Cart 🛒</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img"><div class="placeholder">📕</div></div>
+      <div class="card-body">
+        <div class="card-cat">Book · by Master Dutton</div>
+        <div class="card-name">Psychology of Sparring II</div>
+        <p class="card-desc" style="font-style:italic;color:rgba(255,255,255,0.8);margin-bottom:0.5rem;">The Hidden Art of Deception in Taekwon-Do</p>
+        <p class="card-desc">Advanced concepts of feinting, deception, reading your opponent and controlling the fight.</p>
+        <div class="card-price">£20.00</div>
+        <button class="add-btn" onclick="addToCart('Psychology of Sparring II', 20, null)">Add to Cart 🛒</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img"><div class="placeholder">📔</div></div>
+      <div class="card-body">
+        <div class="card-cat">Book · by Master Dutton</div>
+        <div class="card-name">Taekwon-Do Journal</div>
+        <p class="card-desc" style="font-style:italic;color:rgba(255,255,255,0.8);margin-bottom:0.5rem;">Track Your Taekwon-Do Journey</p>
+        <p class="card-desc">A dedicated training journal to record progress, set goals and track your journey from white belt to black belt.</p>
+        <div class="card-price">£15.00</div>
+        <button class="add-btn" onclick="addToCart('Taekwon-Do Journal', 15, null)">Add to Cart 🛒</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LICENCES -->
+  <div id="tab-licences" class="panel">
+    <div class="card">
+      <div class="card-img"><div class="placeholder">🪪</div></div>
+      <div class="card-body">
+        <div class="card-cat">Licences &amp; Grading</div>
+        <div class="card-name">ITF Scotland Licence</div>
+        <p class="card-desc">Annual ITF Scotland licence — required for all students to train and compete.</p>
+        <div class="card-price">From £8</div>
+        <a href="https://www.elitetkd.uk/online-store" target="_blank" class="add-btn" style="display:block;text-align:center;text-decoration:none;">Browse Store →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CART -->
+<button id="cart-btn" onclick="cartOpen()">🛒<span id="cart-badge">0</span></button>
+<div id="cart-back" onclick="cartClose()"></div>
+<div id="cart-box">
+  <div id="cart-head">
+    <h3>🛒 Your Cart</h3>
+    <button id="cart-close" onclick="cartClose()">✕</button>
+  </div>
+  <div id="cart-items"><div class="empty-msg"><span class="empty-icon">🛒</span>Your cart is empty.<br>Add items above to get started.</div></div>
+  <div id="cart-foot">
+    <div class="total-row">
+      <span class="total-label">Total</span>
+      <span class="total-amount" id="cart-total">£0.00</span>
+    </div>
+    <button class="order-btn" onclick="cartOrder()">✅ Place Order</button>
+    <p class="order-note">Your order will be sent to Master Divine.<br>We will be in touch within 24 hours with payment details.<br><strong style="color:white;">elitetkdscot@gmail.com · 07590 283735</strong></p>
+  </div>
+</div>
+
+<script>
+var cart = [];
+
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tab-'+id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function cartOpen() {
+  document.getElementById('cart-box').classList.add('open');
+  document.getElementById('cart-back').classList.add('open');
+}
+function cartClose() {
+  document.getElementById('cart-box').classList.remove('open');
+  document.getElementById('cart-back').classList.remove('open');
+}
+
+function addToCart(name, price, sizeId) {
+  var size = '';
+  if (sizeId) {
+    var sel = document.getElementById(sizeId);
+    if (!sel.value) { sel.style.borderColor='red'; sel.focus(); setTimeout(function(){ sel.style.borderColor=''; },2000); return; }
+    size = sel.value;
+  }
+  cart.push({ name: name, price: price, size: size });
+  cartRender();
+  cartOpen();
+}
+
+function addToCartMulti(name, price, fields) {
+  var parts = [];
+  for (var i=0; i<fields.length; i++) {
+    var sel = document.getElementById(fields[i][0]);
+    if (!sel.value) { sel.style.borderColor='red'; sel.focus(); return; }
+    parts.push(fields[i][1]+': '+sel.value);
+  }
+  cart.push({ name: name, price: price, size: parts.join(', ') });
+  cartRender();
+  cartOpen();
+}
+
+function cartRemove(i) { cart.splice(i,1); cartRender(); }
+
+function cartRender() {
+  var el = document.getElementById('cart-items');
+  var badge = document.getElementById('cart-badge');
+  var total = document.getElementById('cart-total');
+  if (cart.length === 0) {
+    el.innerHTML = '<div class="empty-msg"><span class="empty-icon">🛒</span>Your cart is empty.</div>';
+    badge.style.display = 'none';
+    total.textContent = '£0.00';
+    return;
+  }
+  var sum = 0; var h = '';
+  cart.forEach(function(item, i) {
+    sum += item.price;
+    h += '<div class="cart-item">' +
+      '<div><div class="cart-item-name">'+item.name+'</div>' +
+      (item.size ? '<div class="cart-item-size">'+item.size+'</div>' : '') +
+      '<div class="cart-item-price">£'+item.price.toFixed(2)+'</div></div>' +
+      '<button class="cart-remove" onclick="cartRemove('+i+')">✕</button></div>';
+  });
+  el.innerHTML = h;
+  badge.textContent = cart.length;
+  badge.style.display = 'flex';
+  total.textContent = '£'+sum.toFixed(2);
+}
+
+function cartOrder() {
+  if (cart.length === 0) return;
+  var items = cart.map(function(i){ return i.name+(i.size?' ('+i.size+')':'')+' = £'+i.price.toFixed(2); });
+  var sum = cart.reduce(function(s,i){ return s+i.price; },0);
+  var fd = new FormData();
+  fd.append('form_type','Shop Order');
+  fd.append('_subject','Elite TKD Shop Order — £'+sum.toFixed(2));
+  fd.append('_replyto','elitetkdscot@gmail.com');
+  fd.append('order_items',items.join(' | '));
+  fd.append('order_total','£'+sum.toFixed(2));
+  fetch('https://formspree.io/f/mykazerd',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+    .then(function(r){
+      if (r.ok) {
+        document.getElementById('cart-items').innerHTML =
+          '<div class="empty-msg"><span class="empty-icon">✅</span>' +
+          '<strong style="color:white;font-size:1.2rem;">Order Sent!</strong><br><br>' +
+          'Master Divine will be in touch within 24 hours with payment details.</div>';
+        cart = [];
+        document.getElementById('cart-badge').style.display = 'none';
+        document.getElementById('cart-total').textContent = '£0.00';
+      }
+    });
+}
+
+function switchHG(colour) {
+  var img = document.getElementById('hg-img');
+  if (!img) return;
+  if (colour === 'Red' && window.HG_RED) img.src = window.HG_RED;
+  else if (colour === 'Blue' && window.HG_BLUE) img.src = window.HG_BLUE;
+}
+</script>
+</body>
+</html>
