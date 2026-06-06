@@ -1109,6 +1109,8 @@
 <body>
 
 <!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+
+
 <nav id="navbar">
   <a href="#home" class="nav-logo">
     <div class="nav-logo-badge">
@@ -1122,7 +1124,7 @@
     <li><a href="#locations">Classes</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#forms">Forms</a></li>
-    <li><a href="#shop">Shop</a></li>
+    <li><a href="shop.html">Shop</a></li>
     <li><a href="#app">TKD App</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#" onclick="event.preventDefault();openModal('modal-trial')" class="nav-cta">Book Free Trial</a></li>
@@ -1137,7 +1139,7 @@
   <a href="#locations" onclick="closeMenu()">Classes &amp; Timetables</a>
   <a href="#pricing" onclick="closeMenu()">Pricing</a>
   <a href="#forms" onclick="closeMenu()">Forms</a>
-  <a href="#shop" onclick="closeMenu()">Shop</a>
+  <a href="shop.html" onclick="closeMenu()">Shop</a>
   <a href="#app" onclick="closeMenu()">TKD App</a>
   <a href="#contact" onclick="closeMenu()">Contact</a>
   <a href="#" class="mob-cta" onclick="closeMenu();openModal('modal-trial')">📋 Book Your Free Trial</a>
@@ -1948,7 +1950,7 @@
                 <option value="120cm">120cm</option>
               </select>
             </div>
-            <button class="shop-buy-btn" onclick="addToCart('Elite Ninja Suit', 40.00, 'ninja-suit-size', 'ninja-suit-img')">Add to Cart 🛒</button>
+            <button class="shop-buy-btn" onclick="cartAdd(this)">Add to Cart 🛒</button>
           </div>
         </div>
 
@@ -1959,7 +1961,7 @@
           </div>
           <div class="shop-product-body">
             <div class="shop-product-cat">Black Belt Uniform · 1st–3rd Dan</div>
-            <h3 class="shop-product-name">Elite Uniform Do Bok I–III Degree</h3>
+            <h3 class="shop-product-name">Elite Uniform Do Bok I-III Degree</h3>
             <p class="shop-product-desc">Official Elite Scotland black collar Dobok for 1st, 2nd and 3rd Dan Black Belts, fully embroidered with the club badge. For all I–III Degree holders.</p>
             <div class="shop-product-price">£70.00</div>
             <div class="shop-product-size-row">
@@ -1977,7 +1979,7 @@
                 <option value="6 (190cm)">6 — 190cm</option>
               </select>
             </div>
-            <button class="shop-buy-btn" onclick="addToCart('Elite Uniform Do Bok I–III Degree', 70.00, 'blackbelt-size', 'blackbelt-img')">Add to Cart 🛒</button>
+            <button class="shop-buy-btn" onclick="cartAdd(this)">Add to Cart 🛒</button>
           </div>
         </div>
 
@@ -2055,7 +2057,7 @@
               </select>
             </div>
 
-            <button class="shop-buy-btn" style="margin-top:0.9rem;" onclick="addToCartMulti('Blitz Head Guard', 31.00, [{id:'headguard-size',label:'Size'},{id:'headguard-colour',label:'Colour'}])">Add to Cart 🛒</button>
+            <button class="shop-buy-btn" style="margin-top:0.9rem;" onclick="cartAdd(this)">Add to Cart 🛒</button>
           </div>
         </div>
 
@@ -2124,7 +2126,7 @@
             <p class="shop-product-desc" style="font-style:italic;color:var(--off-white);opacity:0.8;margin-bottom:0.3rem;">Mental Strategies for Taekwon-Do Sparring</p>
             <p class="shop-product-desc">Master the mental game. This book covers psychological strategies, focus techniques and mindset training to give you the competitive edge in sparring.</p>
             <div class="shop-product-price">£20.00</div>
-            <button class="shop-buy-btn" onclick="addToCart('Psychology of Sparring', 20.00, null, null)">Add to Cart 🛒</button>
+            <button class="shop-buy-btn" onclick="cartAdd(this)">Add to Cart 🛒</button>
           </div>
         </div>
 
@@ -2140,7 +2142,7 @@
             <p class="shop-product-desc" style="font-style:italic;color:var(--off-white);opacity:0.8;margin-bottom:0.3rem;">The Hidden Art of Deception in Taekwon-Do</p>
             <p class="shop-product-desc">The follow-up to the bestselling first volume. Explore advanced concepts of feinting, deception, reading your opponent and controlling the fight.</p>
             <div class="shop-product-price">£20.00</div>
-            <button class="shop-buy-btn" onclick="addToCart('Psychology of Sparring II', 20.00, null, null)">Add to Cart 🛒</button>
+            <button class="shop-buy-btn" onclick="cartAdd(this)">Add to Cart 🛒</button>
           </div>
         </div>
 
@@ -2156,7 +2158,7 @@
             <p class="shop-product-desc" style="font-style:italic;color:var(--off-white);opacity:0.8;margin-bottom:0.3rem;">Track Your Taekwon-Do Journey</p>
             <p class="shop-product-desc">A dedicated training journal to record your progress, set goals, note techniques and track your journey from white belt to black belt and beyond.</p>
             <div class="shop-product-price">£15.00</div>
-            <button class="shop-buy-btn" onclick="addToCart('Taekwon-Do Journal', 15.00, null, null)">Add to Cart 🛒</button>
+            <button class="shop-buy-btn" onclick="cartAdd(this)">Add to Cart 🛒</button>
           </div>
         </div>
 
@@ -2675,433 +2677,7 @@
 </div>
 
 
-<script>
-/* ═══════════════════════════════════════════════════════
-   ELITE SCOTLAND TAEKWON-DO — Site JavaScript
-   Formspree endpoint: https://formspree.io/f/mykazerd
-   ═══════════════════════════════════════════════════════ */
 
-const FORMSPREE_URL = 'https://formspree.io/f/mykazerd';
-
-// ── Mobile menu ──
-function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
-function closeMenu()  { document.getElementById('mobileMenu').classList.remove('open'); }
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('nav') && !e.target.closest('#mobileMenu')) closeMenu();
-});
-
-// ── Location tab switcher ──
-function showLocation(loc, btn) {
-  document.querySelectorAll('.loc-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.loc-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + loc).classList.add('active');
-  if (btn) {
-    btn.classList.add('active');
-  } else {
-    document.querySelectorAll('.loc-tab-btn').forEach(b => {
-      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + loc + "'"))
-        b.classList.add('active');
-    });
-  }
-}
-
-// ── Modal open / close ──
-function openModal(id) {
-  const modal = document.getElementById(id);
-  if (!modal) return;
-  // Reset the form to clean state each time it opens
-  const form = modal.querySelector('form');
-  const successEl = modal.querySelector('.form-success');
-  const errorBanner = modal.querySelector('.form-error-banner');
-  if (form) {
-    form.style.display = '';
-    form.reset();
-    clearFormErrors(form);
-  }
-  if (successEl) successEl.style.display = 'none';
-  if (errorBanner) errorBanner.remove();
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  // Focus first input for accessibility
-  setTimeout(() => { const f = modal.querySelector('input:not([type=hidden])'); if (f) f.focus(); }, 100);
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-  document.body.style.overflow = '';
-}
-function closeModalOutside(e, id) {
-  if (e.target === document.getElementById(id)) closeModal(id);
-}
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay.open').forEach(m => {
-      m.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  }
-});
-
-// ── Form validation helpers ──
-function clearFormErrors(form) {
-  form.querySelectorAll('.field-error').forEach(el => el.remove());
-  form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
-  form.querySelectorAll('.form-group.has-error').forEach(el => el.classList.remove('has-error'));
-}
-
-function showFieldError(input, message) {
-  const group = input.closest('.form-group') || input.closest('.consent-row');
-  if (!group) return;
-  group.classList.add('has-error');
-  input.setAttribute('aria-invalid', 'true');
-  if (!group.querySelector('.field-error')) {
-    const err = document.createElement('span');
-    err.className = 'field-error';
-    err.textContent = message;
-    group.appendChild(err);
-  }
-}
-
-function validateForm(form) {
-  clearFormErrors(form);
-  let valid = true;
-  form.querySelectorAll('[required]').forEach(field => {
-    const val = field.type === 'checkbox' ? field.checked : field.value.trim();
-    if (!val) {
-      const label = form.querySelector(`label[for="${field.id}"]`);
-      const labelText = label ? label.textContent.replace('*','').trim() : 'This field';
-      showFieldError(field, `${labelText} is required.`);
-      valid = false;
-    } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
-      showFieldError(field, 'Please enter a valid email address.');
-      valid = false;
-    }
-  });
-  // Scroll to first error
-  const firstErr = form.querySelector('.has-error');
-  if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  return valid;
-}
-
-// ── Modal form submit handler (all 8 modal forms) ──
-async function handleFormSubmit(e, modalId) {
-  e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('button[type="submit"]');
-  const successEl = document.getElementById('success-' + modalId);
-  const origLabel = btn.innerHTML;
-
-  if (!validateForm(form)) return;
-
-  btn.disabled = true;
-  btn.innerHTML = '<span style="opacity:0.7">Sending…</span>';
-
-  try {
-    const res = await fetch(FORMSPREE_URL, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (res.ok) {
-      // Success: hide form, show success panel
-      form.style.display = 'none';
-      if (successEl) { successEl.style.display = 'block'; }
-    } else {
-      // Formspree returned an error — show field errors if any
-      btn.disabled = false;
-      btn.innerHTML = origLabel;
-      if (data.errors && data.errors.length) {
-        data.errors.forEach(err => {
-          const field = form.querySelector(`[name="${err.field}"]`);
-          if (field) showFieldError(field, err.message);
-          else showFormError(form, err.message);
-        });
-      } else {
-        showFormError(form, 'Something went wrong — please try again or email <a href="mailto:elitetkdscot@gmail.com">elitetkdscot@gmail.com</a> directly.');
-      }
-    }
-  } catch (err) {
-    btn.disabled = false;
-    btn.innerHTML = origLabel;
-    showFormError(form, 'Network error. Please check your connection and try again.');
-  }
-}
-
-
-// ── Show a banner error inside a form ──
-function showFormError(form, message) {
-  let banner = form.querySelector('.form-error-banner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.className = 'form-error-banner';
-    form.insertBefore(banner, form.querySelector('button[type="submit"]').closest('.form-submit-row') || form.lastElementChild);
-  }
-  banner.innerHTML = '⚠️ ' + message;
-}
-
-// ── Scroll reveal — only animate cards that start below the fold ──
-const revealEls = document.querySelectorAll('.reveal');
-revealEls.forEach(el => {
-  if (el.getBoundingClientRect().top > window.innerHeight) {
-    el.classList.add('animate');
-  }
-});
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal.animate').forEach(el => observer.observe(el));
-
-// ── Nav scroll shadow ──
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').style.boxShadow = window.scrollY > 60 ? '0 4px 30px rgba(0,0,0,0.45)' : 'none';
-});
-
-
-
-// ═══════════════════════════════════════════════════
-// ELITE TKD SHOPPING CART
-// PayPal: replace PAYPAL_EMAIL below with your PayPal email
-// ═══════════════════════════════════════════════════
-const PAYPAL_EMAIL = 'elitetkdscot@gmail.com';
-const NOTIFY_EMAIL = 'elitetkdscot@gmail.com';
-
-var cart = [];
-
-function openCart() {
-  document.getElementById('cart-drawer').classList.add('open');
-  document.getElementById('cart-backdrop').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  // Load PayPal button when cart opens
-  setTimeout(initPayPalButton, 300);
-}
-function closeCart() {
-  document.getElementById('cart-drawer').classList.remove('open');
-  document.getElementById('cart-backdrop').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function addToCart(name, price, sizeSelectId, imgId) {
-  var sel = sizeSelectId ? document.getElementById(sizeSelectId) : null;
-  var size = sel ? sel.value : '';
-  if (sel && size === '') {
-    sel.style.borderColor = '#e8192e';
-    sel.style.boxShadow = '0 0 0 2px rgba(200,16,46,0.3)';
-    sel.focus();
-    setTimeout(function(){ sel.style.borderColor = ''; sel.style.boxShadow = ''; }, 2000);
-    return;
-  }
-  cart.push({ name: name, price: price, size: size, qty: 1 });
-  renderCart();
-  showToast('✓ ' + name + ' added');
-  openCart();
-}
-
-function removeFromCart(idx) {
-  cart.splice(idx, 1);
-  renderCart();
-}
-
-function renderCart() {
-  var itemsEl = document.getElementById('cart-items');
-  var emptyEl = document.getElementById('cart-empty');
-  var totalEl = document.getElementById('cart-total');
-  var badgeEl = document.getElementById('cart-badge');
-  var checkoutBtn = document.getElementById('cart-checkout-btn');
-
-  if (cart.length === 0) {
-    emptyEl.style.display = 'block';
-    itemsEl.innerHTML = '';
-    itemsEl.appendChild(emptyEl);
-    totalEl.textContent = '£0.00';
-    badgeEl.style.display = 'none';
-    checkoutBtn.disabled = true;
-    return;
-  }
-
-  emptyEl.style.display = 'none';
-  var total = 0;
-  var html = '';
-  cart.forEach(function(item, i) {
-    total += item.price;
-    html += '<div class="cart-item">' +
-      '<div class="cart-item-details">' +
-        '<div class="cart-item-name">' + item.name + '</div>' +
-        (item.size ? '<div class="cart-item-size">Size: ' + item.size + '</div>' : '') +
-        '<div class="cart-item-price">£' + item.price.toFixed(2) + '</div>' +
-      '</div>' +
-      '<button class="cart-item-remove" onclick="removeFromCart(' + i + ')" title="Remove">✕</button>' +
-    '</div>';
-  });
-
-  itemsEl.innerHTML = html;
-  totalEl.textContent = '£' + total.toFixed(2);
-  badgeEl.textContent = cart.length;
-  badgeEl.style.display = 'flex';
-  checkoutBtn.disabled = false;
-
-  // Update PayPal link with correct amount
-  var ppLink = document.getElementById('cart-checkout-btn');
-  if (ppLink) ppLink.href = 'https://www.paypal.com/gb/send-money/checkout/login?recipient=elitetkdscot%40gmail.com&amount=' + total.toFixed(2) + '&currencyCode=GBP';
-}
-
-function submitOrderEmailOnly() {
-  if (cart.length === 0) return;
-  var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
-  var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
-  var formData = new FormData();
-  formData.append('form_type', 'Shop Order');
-  formData.append('_subject', 'Elite TKD Shop Order — £' + total.toFixed(2));
-  formData.append('_replyto', NOTIFY_EMAIL);
-  formData.append('order_items', items.join(' | '));
-  formData.append('order_total', '£' + total.toFixed(2));
-  formData.append('message', 'New shop order:\n' + items.join('\n') + '\n\nTotal: £' + total.toFixed(2));
-  fetch('https://formspree.io/f/mykazerd', {
-    method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
-  }).then(function(r) {
-    if (r.ok) {
-      showOrderConfirmed();
-    }
-  });
-}
-
-function showOrderConfirmed() {
-  document.getElementById('cart-items').innerHTML =
-    '<div style="text-align:center;padding:2rem 1rem;">' +
-    '<div style="font-size:3rem;margin-bottom:1rem;">✅</div>' +
-    '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.8rem;color:white;margin-bottom:0.75rem;">Order Sent!</div>' +
-    '<p style="color:#8899AA;font-size:0.9rem;line-height:1.7;">Your order has been sent to Master Divine.<br>We\'ll be in touch within 24 hours with payment details.<br><br>' +
-    '<strong style="color:white;">elitetkdscot@gmail.com</strong><br>' +
-    '<strong style="color:white;">07590 283735</strong></p>' +
-    '</div>';
-  cart = [];
-  document.getElementById('cart-badge').style.display = 'none';
-}
-
-// PayPal Smart Buttons — loads when cart opens
-// Client ID: get from paypal.com/developer/applications
-var PAYPAL_CLIENT_ID = 'sb'; // replace with your real client ID from developer.paypal.com
-
-function initPayPalButton() {
-  var container = document.getElementById('paypal-button-container');
-  if (!container) return;
-  if (cart.length === 0) return;
-  if (typeof paypal === 'undefined') return;
-
-  // Clear and re-render
-  container.innerHTML = '';
-  var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
-  var items = cart.map(function(i){ return i.name + (i.size ? ' (' + i.size + ')' : '') + ' = £' + i.price.toFixed(2); });
-
-  paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: { value: total.toFixed(2), currency_code: 'GBP' },
-          description: items.join(' | ')
-        }]
-      });
-    },
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        var formData = new FormData();
-        formData.append('form_type', 'Shop Order — PAID via PayPal');
-        formData.append('_subject', 'Elite TKD PAID Order — £' + total.toFixed(2));
-        formData.append('_replyto', NOTIFY_EMAIL);
-        formData.append('order_items', items.join(' | '));
-        formData.append('order_total', '£' + total.toFixed(2));
-        formData.append('paypal_payer', details.payer.name.given_name + ' ' + details.payer.name.surname);
-        formData.append('paypal_email', details.payer.email_address || '');
-        formData.append('message', 'PAYMENT CONFIRMED via PayPal. Payer: ' + details.payer.name.given_name + ' ' + details.payer.name.surname);
-        fetch('https://formspree.io/f/mykazerd', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-        cart = [];
-        showOrderConfirmed();
-      });
-    },
-    onError: function(err) {
-      console.error('PayPal error', err);
-    }
-  }).render('#paypal-button-container');
-}
-
-
-function showToast(msg) {
-  var t = document.getElementById('cart-toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2500);
-}
-
-
-// ── Add to cart with multiple selectors (size + colour etc) ──
-function addToCartMulti(name, price, selectors) {
-  var parts = [];
-  for (var i = 0; i < selectors.length; i++) {
-    var el = document.getElementById(selectors[i].id);
-    if (!el) continue;
-    if (el.value === '') {
-      el.style.borderColor = '#e8192e';
-      el.style.boxShadow = '0 0 0 2px rgba(200,16,46,0.3)';
-      (function(e){ setTimeout(function(){ e.style.borderColor=''; e.style.boxShadow=''; }, 2000); })(el);
-      el.focus();
-      return;
-    }
-    parts.push(selectors[i].label + ': ' + el.value);
-  }
-  var sizeStr = parts.join(', ');
-  cart.push({ name: name, price: price, size: sizeStr, qty: 1 });
-  renderCart();
-  showToast('✓ ' + name + ' added');
-  openCart();
-}
-
-// ── Switch head guard image on colour change ──
-function switchHeadguardImg(colour) {
-  var img = document.getElementById('headguard-img');
-  if (!img) return;
-  var redData = document.getElementById('headguard-red-data');
-  var blueData = document.getElementById('headguard-blue-data');
-  if (colour === 'Red' && redData) {
-    img.style.opacity = '0';
-    setTimeout(function(){
-      img.src = 'data:image/webp;base64,' + redData.value.replace(/\s/g,'');
-      img.style.opacity = '1';
-    }, 150);
-  } else if (colour === 'Blue' && blueData) {
-    img.style.opacity = '0';
-    setTimeout(function(){
-      img.src = 'data:image/webp;base64,' + blueData.value.replace(/\s/g,'');
-      img.style.opacity = '1';
-    }, 150);
-  }
-}
-
-// ── Shop category tabs ──
-function showShopCat(cat, btn) {
-  document.querySelectorAll('.shop-cat-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.shop-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('shop-cat-' + cat).classList.add('active');
-  if (btn) btn.classList.add('active');
-}
-
-// ── Shop buy button - checks size selected ──
-function buyProduct(url, sizeSelectId) {
-  var sel = document.getElementById(sizeSelectId);
-  if (sel && sel.value === '') {
-    sel.style.borderColor = '#e8192e';
-    sel.focus();
-    return;
-  }
-  window.open(url, '_blank');
-}
-
-// ── Smooth scroll — handled by CSS scroll-behavior:smooth + scroll-margin-top ──
-// Native CSS approach: no JS needed, works on all links including mobile menu
-</script>
 
 
 
@@ -3691,6 +3267,213 @@ function buyProduct(url, sizeSelectId) {
 </div>
 
 <!-- ═══════════════ SHOP ═══════════════ -->
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ELITE SCOTLAND TAEKWON-DO — Site JavaScript
+   Formspree endpoint: https://formspree.io/f/mykazerd
+   ═══════════════════════════════════════════════════════ */
+
+const FORMSPREE_URL = 'https://formspree.io/f/mykazerd';
+
+// ── Mobile menu ──
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu()  { document.getElementById('mobileMenu').classList.remove('open'); }
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('nav') && !e.target.closest('#mobileMenu')) closeMenu();
+});
+
+// ── Location tab switcher ──
+function showLocation(loc, btn) {
+  document.querySelectorAll('.loc-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.loc-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + loc).classList.add('active');
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    document.querySelectorAll('.loc-tab-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + loc + "'"))
+        b.classList.add('active');
+    });
+  }
+}
+
+// ── Modal open / close ──
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  // Reset the form to clean state each time it opens
+  const form = modal.querySelector('form');
+  const successEl = modal.querySelector('.form-success');
+  const errorBanner = modal.querySelector('.form-error-banner');
+  if (form) {
+    form.style.display = '';
+    form.reset();
+    clearFormErrors(form);
+  }
+  if (successEl) successEl.style.display = 'none';
+  if (errorBanner) errorBanner.remove();
+  modal.classList.add('open');
+  // Focus first input for accessibility
+  setTimeout(() => { const f = modal.querySelector('input:not([type=hidden])'); if (f) f.focus(); }, 100);
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function closeModalOutside(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+        });
+  }
+});
+
+// ── Form validation helpers ──
+function clearFormErrors(form) {
+  form.querySelectorAll('.field-error').forEach(el => el.remove());
+  form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+  form.querySelectorAll('.form-group.has-error').forEach(el => el.classList.remove('has-error'));
+}
+
+function showFieldError(input, message) {
+  const group = input.closest('.form-group') || input.closest('.consent-row');
+  if (!group) return;
+  group.classList.add('has-error');
+  input.setAttribute('aria-invalid', 'true');
+  if (!group.querySelector('.field-error')) {
+    const err = document.createElement('span');
+    err.className = 'field-error';
+    err.textContent = message;
+    group.appendChild(err);
+  }
+}
+
+function validateForm(form) {
+  clearFormErrors(form);
+  let valid = true;
+  form.querySelectorAll('[required]').forEach(field => {
+    const val = field.type === 'checkbox' ? field.checked : field.value.trim();
+    if (!val) {
+      const label = form.querySelector(`label[for="${field.id}"]`);
+      const labelText = label ? label.textContent.replace('*','').trim() : 'This field';
+      showFieldError(field, `${labelText} is required.`);
+      valid = false;
+    } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+      showFieldError(field, 'Please enter a valid email address.');
+      valid = false;
+    }
+  });
+  // Scroll to first error
+  const firstErr = form.querySelector('.has-error');
+  if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  return valid;
+}
+
+// ── Modal form submit handler (all 8 modal forms) ──
+async function handleFormSubmit(e, modalId) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  const successEl = document.getElementById('success-' + modalId);
+  const origLabel = btn.innerHTML;
+
+  if (!validateForm(form)) return;
+
+  btn.disabled = true;
+  btn.innerHTML = '<span style="opacity:0.7">Sending…</span>';
+
+  try {
+    const res = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+      // Success: hide form, show success panel
+      form.style.display = 'none';
+      if (successEl) { successEl.style.display = 'block'; }
+    } else {
+      // Formspree returned an error — show field errors if any
+      btn.disabled = false;
+      btn.innerHTML = origLabel;
+      if (data.errors && data.errors.length) {
+        data.errors.forEach(err => {
+          const field = form.querySelector(`[name="${err.field}"]`);
+          if (field) showFieldError(field, err.message);
+          else showFormError(form, err.message);
+        });
+      } else {
+        showFormError(form, 'Something went wrong — please try again or email <a href="mailto:elitetkdscot@gmail.com">elitetkdscot@gmail.com</a> directly.');
+      }
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = origLabel;
+    showFormError(form, 'Network error. Please check your connection and try again.');
+  }
+}
+
+
+// ── Show a banner error inside a form ──
+function showFormError(form, message) {
+  let banner = form.querySelector('.form-error-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.className = 'form-error-banner';
+    form.insertBefore(banner, form.querySelector('button[type="submit"]').closest('.form-submit-row') || form.lastElementChild);
+  }
+  banner.innerHTML = '⚠️ ' + message;
+}
+
+// ── Scroll reveal — only animate cards that start below the fold ──
+const revealEls = document.querySelectorAll('.reveal');
+revealEls.forEach(el => {
+  if (el.getBoundingClientRect().top > window.innerHeight) {
+    el.classList.add('animate');
+  }
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal.animate').forEach(el => observer.observe(el));
+
+// ── Nav scroll shadow ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow = window.scrollY > 60 ? '0 4px 30px rgba(0,0,0,0.45)' : 'none';
+});
+
+
+
+// ── Shop category tabs ──
+function showShopCat(cat, btn) {
+  document.querySelectorAll('.shop-cat-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.shop-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('shop-cat-' + cat).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ── Shop buy button - checks size selected ──
+function buyProduct(url, sizeSelectId) {
+  var sel = document.getElementById(sizeSelectId);
+  if (sel && sel.value === '') {
+    sel.style.borderColor = '#e8192e';
+    sel.focus();
+    return;
+  }
+  window.open(url, '_blank');
+}
+
+// ── Smooth scroll — handled by CSS scroll-behavior:smooth + scroll-margin-top ──
+// Native CSS approach: no JS needed, works on all links including mobile menu
+</script>
 
 <textarea id="ninja-img-data" style="display:none">
 /9j/4AAQSkZJRgABAQAAAQABAAD//gAKLXZlcmJvc2X/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAA
@@ -6938,10 +6721,9 @@ IECAKgIAcujgvvRQAACV91Vk/DjdtmECAK4QIebW3V5ymL9y++VqGAejxpWgQIAoA9HjStDjHRVv71oE
       <span class="cart-total-amount" id="cart-total">£0.00</span>
     </div>
 
-    <div id="paypal-button-container" style="margin-bottom:0.75rem;min-height:50px;"></div>
     <button onclick="submitOrderEmailOnly()"
-      style="display:block;width:100%;text-align:center;background:rgba(255,255,255,0.08);color:white;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.75rem;border-radius:6px;margin-bottom:0.75rem;border:1px solid rgba(255,255,255,0.15);cursor:pointer;">
-      📧 Or: Place Order by Email
+      style="display:block;width:100%;text-align:center;background:#C8102E;color:white;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem;border-radius:6px;margin-bottom:0.75rem;border:none;cursor:pointer;">
+      ✅ Place Order
     </button>
 
     <p class="cart-checkout-note">
@@ -7643,7 +7425,111 @@ htTAlmMW8hcRZ/kGc2Vim9bsqsTvY4rKwObmVPgF4Bwt03rA//M7Bs1c0K0NfYDoL5+89w9JFIVIAAAA
   if (img && td) img.src = 'data:image/webp;base64,' + td.value.replace(/\s/g,'');
 })();
 </script>
-<!-- PayPal SDK - Live -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAArGkV7vT_ICPenwKhhK53PvhAYDQbc2p1EddhKiy5cE71kSzlj9wTBqXxlOL4A25_nhF1TQNNal0QyrY&currency=GBP&intent=capture" onload="initPayPalButton()"></script>
+
+
+<style>
+  /* CART */
+  #cart-btn { position:fixed; bottom:1.5rem; right:1.5rem; z-index:900; background:#C8102E; color:white; width:60px; height:60px; border-radius:50%; border:none; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 20px rgba(200,16,46,0.6); }
+  #cart-count { position:absolute; top:-4px; right:-4px; background:white; color:#C8102E; border-radius:50%; width:20px; height:20px; font-size:0.7rem; font-weight:bold; display:none; align-items:center; justify-content:center; font-family:sans-serif; }
+  #cart-back { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:901; display:none; }
+  #cart-box { position:fixed; top:0; right:0; bottom:0; width:380px; max-width:100vw; background:#0D1F3C; z-index:902; transform:translateX(100%); transition:transform 0.3s; display:flex; flex-direction:column; border-left:2px solid #C8102E; }
+  #cart-box.open { transform:translateX(0); }
+  #cart-back.open { display:block; }
+  #cart-head { padding:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center; }
+  #cart-head h3 { margin:0; font-family:sans-serif; color:white; font-size:1.3rem; }
+  #cart-x { background:none; border:none; color:white; font-size:1.5rem; cursor:pointer; }
+  #cart-list { flex:1; overflow-y:auto; padding:1rem; color:white; font-family:sans-serif; }
+  #cart-foot { padding:1.5rem; border-top:1px solid rgba(255,255,255,0.1); }
+  #cart-total-line { display:flex; justify-content:space-between; color:white; font-family:sans-serif; font-size:1.2rem; margin-bottom:1rem; }
+  #cart-order-btn { width:100%; background:#C8102E; color:white; border:none; padding:1rem; font-size:1rem; cursor:pointer; border-radius:4px; font-family:sans-serif; font-weight:bold; }
+  #cart-order-btn:hover { background:#e8192e; }
+</style>
+
+<button id="cart-btn" onclick="cartOpen()">🛒<span id="cart-count">0</span></button>
+<div id="cart-back" onclick="cartClose()"></div>
+<div id="cart-box">
+  <div id="cart-head">
+    <h3>🛒 Your Cart</h3>
+    <button id="cart-x" onclick="cartClose()">✕</button>
+  </div>
+  <div id="cart-list">Your cart is empty.</div>
+  <div id="cart-foot">
+    <div id="cart-total-line"><span>Total</span><span id="cart-total">£0.00</span></div>
+    <button id="cart-order-btn" onclick="cartOrder()">✅ Place Order</button>
+  </div>
+</div>
+
+<script>
+var C = [];
+function cartOpen() {
+  document.getElementById('cart-box').classList.add('open');
+  document.getElementById('cart-back').classList.add('open');
+}
+function cartClose() {
+  document.getElementById('cart-box').classList.remove('open');
+  document.getElementById('cart-back').classList.remove('open');
+}
+function cartAdd(btn) {
+  var card = btn.closest('.shop-product-card');
+  var name = card.querySelector('.shop-product-name').textContent;
+  var priceEl = card.querySelector('.shop-product-price');
+  var price = parseFloat(priceEl.textContent.replace('£','')) || 0;
+  var sel = card.querySelector('select');
+  var size = '';
+  if (sel) {
+    if (!sel.value) { sel.style.borderColor='red'; sel.focus(); return; }
+    size = sel.value;
+    sel.style.borderColor = '';
+  }
+  C.push({name:name, price:price, size:size});
+  cartRender();
+  cartOpen();
+}
+function cartRemove(i) { C.splice(i,1); cartRender(); }
+function cartRender() {
+  var el = document.getElementById('cart-list');
+  var cnt = document.getElementById('cart-count');
+  var tot = document.getElementById('cart-total');
+  if (!el) return;
+  if (C.length === 0) {
+    el.innerHTML = 'Your cart is empty.';
+    cnt.style.display = 'none';
+    tot.textContent = '£0.00';
+    return;
+  }
+  var sum = 0; var h = '';
+  C.forEach(function(item,i){
+    sum += item.price;
+    h += '<div style="padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;">' +
+      '<div><strong>' + item.name + '</strong>' + (item.size?'<br><small>'+item.size+'</small>':'') + '<br>£' + item.price.toFixed(2) + '</div>' +
+      '<button onclick="cartRemove('+i+')" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:1.2rem;">✕</button></div>';
+  });
+  el.innerHTML = h;
+  cnt.textContent = C.length;
+  cnt.style.display = 'flex';
+  tot.textContent = '£' + sum.toFixed(2);
+}
+function cartOrder() {
+  if (C.length === 0) return;
+  var items = C.map(function(i){ return i.name + (i.size?' ('+i.size+')':'') + ' = £' + i.price.toFixed(2); });
+  var total = C.reduce(function(s,i){ return s+i.price; },0);
+  var fd = new FormData();
+  fd.append('form_type','Shop Order');
+  fd.append('_subject','Elite TKD Shop Order — £'+total.toFixed(2));
+  fd.append('_replyto','elitetkdscot@gmail.com');
+  fd.append('order_items',items.join(' | '));
+  fd.append('order_total','£'+total.toFixed(2));
+  fetch('https://formspree.io/f/mykazerd',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+    .then(function(r){
+      if(r.ok){
+        document.getElementById('cart-list').innerHTML = '<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;">✅</div><h3 style="color:white;margin:1rem 0;">Order Sent!</h3><p style="color:#aaa;">Master Divine will be in touch within 24 hours.</p></div>';
+        C=[];
+        document.getElementById('cart-count').style.display='none';
+        document.getElementById('cart-total').textContent='£0.00';
+      }
+    });
+}
+</script>
+
 </body>
 </html>
