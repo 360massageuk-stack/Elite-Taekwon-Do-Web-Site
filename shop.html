@@ -276,6 +276,8 @@ h2 span{color:var(--red);}
       <span class="total-label">Total</span>
       <span class="total-amount" id="cart-total">£0.00</span>
     </div>
+    <input type="text" id="cust-name" placeholder="Your name *" style="width:100%;background:#0A1628;border:1px solid rgba(255,255,255,0.15);color:white;padding:0.65rem;border-radius:4px;font-family:'Barlow',sans-serif;font-size:0.9rem;margin-bottom:0.5rem;outline:none;">
+    <input type="email" id="cust-email" placeholder="Your email * (so we can contact you)" style="width:100%;background:#0A1628;border:1px solid rgba(255,255,255,0.15);color:white;padding:0.65rem;border-radius:4px;font-family:'Barlow',sans-serif;font-size:0.9rem;margin-bottom:0.75rem;outline:none;">
     <button class="order-btn" onclick="cartOrder()">✅ Place Order</button>
     <p class="order-note">Your order will be sent to Master Divine.<br>We will be in touch within 24 hours with payment details.<br><strong style="color:white;">elitetkdscot@gmail.com · 07590 283735</strong></p>
   </div>
@@ -353,25 +355,39 @@ function cartRender() {
 
 function cartOrder() {
   if (cart.length === 0) return;
+  var name = document.getElementById('cust-name').value.trim();
+  var email = document.getElementById('cust-email').value.trim();
+  if (!name) { document.getElementById('cust-name').style.borderColor='red'; document.getElementById('cust-name').focus(); return; }
+  if (!email || !email.includes('@')) { document.getElementById('cust-email').style.borderColor='red'; document.getElementById('cust-email').focus(); return; }
   var items = cart.map(function(i){ return i.name+(i.size?' ('+i.size+')':'')+' = £'+i.price.toFixed(2); });
   var sum = cart.reduce(function(s,i){ return s+i.price; },0);
   var fd = new FormData();
   fd.append('form_type','Shop Order');
-  fd.append('_subject','Elite TKD Shop Order — £'+sum.toFixed(2));
-  fd.append('_replyto','elitetkdscot@gmail.com');
+  fd.append('_subject','Elite TKD Shop Order from '+name+' — £'+sum.toFixed(2));
+  fd.append('_replyto', email);
+  fd.append('customer_name', name);
+  fd.append('customer_email', email);
   fd.append('order_items',items.join(' | '));
   fd.append('order_total','£'+sum.toFixed(2));
+  fd.append('message','Order from: '+name+' ('+email+')\n\nItems:\n'+items.join('\n')+'\n\nTotal: £'+sum.toFixed(2));
   fetch('https://formspree.io/f/mykazerd',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
     .then(function(r){
       if (r.ok) {
         document.getElementById('cart-items').innerHTML =
           '<div class="empty-msg"><span class="empty-icon">✅</span>' +
           '<strong style="color:white;font-size:1.2rem;">Order Sent!</strong><br><br>' +
-          'Master Divine will be in touch within 24 hours with payment details.</div>';
+          'Hi '+name+'! Your order has been sent to Master Divine.<br>We will email you at <strong style="color:white;">'+email+'</strong> within 24 hours with payment details.</div>';
         cart = [];
         document.getElementById('cart-badge').style.display = 'none';
         document.getElementById('cart-total').textContent = '£0.00';
+        document.getElementById('cust-name').value = '';
+        document.getElementById('cust-email').value = '';
+      } else {
+        alert('Could not send order. Please email elitetkdscot@gmail.com or call 07590 283735');
       }
+    })
+    .catch(function(){ 
+      alert('Could not send order. Please email elitetkdscot@gmail.com or call 07590 283735'); 
     });
 }
 
