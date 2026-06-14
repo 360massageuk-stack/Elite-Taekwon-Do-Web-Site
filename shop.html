@@ -83,12 +83,12 @@ h2 span{color:var(--red);}
 
 <nav>
   <a href="index.html" class="back">← Back to Elite TKD</a>
-  <h1>ELITE <span>TKD</span> SHOP</h1>
+  <h1>ELITE <span>TKD</span> </h1>
   <span style="color:var(--gray);font-size:0.85rem;">Official Store</span>
 </nav>
 
 <div class="container">
-  <h2>OFFICIAL <span>SHOP</span></h2>
+  <h2>OFFICIAL <span></span></h2>
   <p class="subtitle">Official Elite Scotland Taekwon-Do equipment and clothing. Select your size and add to cart.</p>
 
   <div class="tabs">
@@ -204,7 +204,7 @@ h2 span{color:var(--red);}
         <div class="card-name">Elite TKD Hoodies &amp; T-Shirts</div>
         <p class="card-desc">Elite Scotland TKD branded hoodies, t-shirts and kit bags.</p>
         <div class="card-price">From £18</div>
-        <a href="https://www.elitetkd.uk/online-store" target="_blank" class="add-btn" style="display:block;text-align:center;text-decoration:none;">Browse Store →</a>
+        <a href="https://www.elitetkd.uk/shop.html" target="_blank" class="add-btn" style="display:block;text-align:center;text-decoration:none;">Browse Store →</a>
       </div>
     </div>
   </div>
@@ -255,7 +255,7 @@ h2 span{color:var(--red);}
         <div class="card-name">ITF Scotland Licence</div>
         <p class="card-desc">Annual ITF Scotland licence — required for all students to train and compete.</p>
         <div class="card-price">From £8</div>
-        <a href="https://www.elitetkd.uk/online-store" target="_blank" class="add-btn" style="display:block;text-align:center;text-decoration:none;">Browse Store →</a>
+        <a href="https://www.elitetkd.uk/shop.html" target="_blank" class="add-btn" style="display:block;text-align:center;text-decoration:none;">Browse Store →</a>
       </div>
     </div>
   </div>
@@ -362,8 +362,8 @@ function cartOrder() {
   var items = cart.map(function(i){ return i.name+(i.size?' ('+i.size+')':'')+' = £'+i.price.toFixed(2); });
   var sum = cart.reduce(function(s,i){ return s+i.price; },0);
   var fd = new FormData();
-  fd.append('form_type','Shop Order');
-  fd.append('_subject','Elite TKD Shop Order from '+name+' — £'+sum.toFixed(2));
+  fd.append('form_type',' Order');
+  fd.append('_subject','Elite TKD  Order from '+name+' — £'+sum.toFixed(2));
   fd.append('_replyto', email);
   fd.append('customer_name', name);
   fd.append('customer_email', email);
