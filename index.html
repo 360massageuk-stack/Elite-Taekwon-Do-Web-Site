@@ -3404,6 +3404,11 @@ async function handleFormSubmit(e, modalId) {
       // Success: hide form, show success panel
       form.style.display = 'none';
       if (successEl) { successEl.style.display = 'block'; }
+      if (modalId === 'modal-ninja-licence' || modalId === 'modal-licence') {
+  setTimeout(function () {
+    window.location.href = 'https://www.paypal.com/ncp/payment/AUQYMR9SNZ2D8';
+  }, 1500);
+   } 
     } else {
       // Formspree returned an error — show field errors if any
       btn.disabled = false;
