@@ -319,10 +319,14 @@
   .class-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
 
   .class-card {
-    background: var(--navy); border: 1px solid rgba(200,16,46,0.2);
-    border-radius: 6px; overflow: hidden;
+    background: var(--navy);
+    border: 1px solid rgba(200,16,46,0.2);
+    border-radius: 6px;
+    overflow: hidden;
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-  }
+    display: flex;
+    flex-direction: column;
+    }
   .class-card:hover { transform: translateY(-3px); border-color: rgba(200,16,46,0.55); box-shadow: 0 10px 35px rgba(0,0,0,0.35); }
 
   .class-card-head {
@@ -341,7 +345,12 @@
     letter-spacing: 0.08em; color: var(--off-white);
   }
 
-  .class-card-body { padding: 1.25rem; }
+  .class-card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+   }
   .class-venue {
     font-family: 'Oswald', sans-serif; font-size: 0.95rem; font-weight: 600;
     color: var(--white); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;
@@ -358,12 +367,24 @@
     margin-bottom: 1.4rem;
     }
   .class-book-btn {
-    display: block; text-align: center; background: var(--red); color: var(--white);
-    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.82rem;
-    letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
-    padding: 0.65rem 1rem; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-    transition: background 0.2s; cursor: pointer; border: none; width: 100%;
-  }
+    display: block;
+    text-align: center;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.65rem 1rem;
+    margin-top: auto;
+    clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    }
   .class-book-btn:hover { background: var(--red-bright); }
 
   /* Placeholder card */
