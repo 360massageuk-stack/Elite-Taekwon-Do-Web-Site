@@ -1,2 +1,345 @@
-<h1>Elite TKD Learning Centre</h1>
-<p>The page is working.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Elite TKD Learning Centre | Taekwon-Do Guides and Resources</title>
+
+  <meta name="description" content="Free Taekwon-Do guides and resources for parents, children, adult beginners and students from Elite Taekwon-Do Scotland.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #07111f;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #040b14;
+      border-bottom: 3px solid #d71920;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #e1262f;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #e1262f;
+    }
+
+    .hero {
+      padding: 90px 20px 80px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(3, 10, 20, 0.88), rgba(7, 17, 31, 0.96)),
+        radial-gradient(circle at top, #18314e, #07111f 65%);
+      border-bottom: 1px solid #26384c;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 6vw, 4.5rem);
+      margin-bottom: 14px;
+    }
+
+    .hero h1 span {
+      color: #e1262f;
+    }
+
+    .hero h2 {
+      color: #d5dbe2;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto 30px;
+      color: #c4ccd5;
+      font-size: 1.08rem;
+    }
+
+    .button {
+      display: inline-block;
+      background: #d71920;
+      color: #ffffff;
+      padding: 13px 25px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background: #f12e37;
+      transform: translateY(-2px);
+    }
+
+    main {
+      width: min(1180px, 92%);
+      margin: auto;
+      padding: 65px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .section-heading h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      color: #aeb9c5;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: #0d1b2b;
+      border: 1px solid #26384c;
+      border-top: 4px solid #d71920;
+      border-radius: 8px;
+      padding: 30px;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #d71920;
+    }
+
+    .card h3 {
+      font-size: 1.45rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #b9c3cd;
+      margin-bottom: 18px;
+    }
+
+    .card a {
+      color: #ff4b53;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .latest {
+      margin-top: 70px;
+      background: #0a1726;
+      border: 1px solid #26384c;
+      border-radius: 8px;
+      padding: 35px;
+    }
+
+    .latest h2 {
+      margin-bottom: 18px;
+    }
+
+    .article-link {
+      display: block;
+      background: #101f30;
+      color: #ffffff;
+      padding: 18px;
+      margin-top: 12px;
+      border-left: 4px solid #d71920;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .article-link:hover {
+      background: #172a3f;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 70px;
+      padding: 50px 25px;
+      background: #0d1b2b;
+      border-radius: 8px;
+      border: 1px solid #26384c;
+    }
+
+    .cta h2 {
+      margin-bottom: 10px;
+    }
+
+    .cta p {
+      color: #b9c3cd;
+      margin-bottom: 24px;
+    }
+
+    footer {
+      background: #040b14;
+      border-top: 3px solid #d71920;
+      text-align: center;
+      color: #9ca8b4;
+      padding: 30px 20px;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        justify-content: center;
+        text-align: center;
+      }
+
+      nav {
+        width: 100%;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 5px 8px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 65px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">ELITE <span>TKD</span> SCOTLAND</div>
+
+    <nav>
+      <a href="/">Home</a>
+      <a href="/learning/">Learning</a>
+      <a href="https://www.elitetkd.uk/pricing-plans/plans-pricing">TKD App</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Elite TKD <span>Learning Centre</span></h1>
+    <h2>Learn • Train • Achieve</h2>
+
+    <p>
+      Free Taekwon-Do guides, advice and training resources for parents,
+      children, adults and existing students.
+    </p>
+
+    <a class="button" href="#guides">Explore the Guides</a>
+  </section>
+
+  <main>
+
+    <section id="guides">
+      <div class="section-heading">
+        <h2>Who can we help?</h2>
+        <p>Choose the section that best suits your Taekwon-Do journey.</p>
+      </div>
+
+      <div class="cards">
+
+        <article class="card">
+          <h3>For Parents</h3>
+          <p>
+            Helpful information about confidence, discipline, safety,
+            gradings and what your child can expect from Taekwon-Do.
+          </p>
+          <a href="/benefits-of-taekwon-do-for-children.html">
+            Read the parent guides →
+          </a>
+        </article>
+
+        <article class="card">
+          <h3>For Adult Beginners</h3>
+          <p>
+            Thinking about starting Taekwon-Do? It is never too late to
+            improve your fitness, confidence and flexibility.
+          </p>
+          <a href="#adult-guides">Adult guides coming soon →</a>
+        </article>
+
+        <article class="card">
+          <h3>Student Resources</h3>
+          <p>
+            Learn about patterns, Korean terminology, belt gradings,
+            sparring, theory and home training.
+          </p>
+          <a href="#student-guides">Student resources coming soon →</a>
+        </article>
+
+        <article class="card">
+          <h3>Elite TKD App</h3>
+          <p>
+            Continue your training at home with pattern videos, theory,
+            quizzes and useful training resources.
+          </p>
+          <a href="https://www.elitetkd.uk/pricing-plans/plans-pricing">
+            Discover the Elite TKD App →
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="latest">
+      <h2>Latest Guide</h2>
+
+      <a class="article-link" href="/benefits-of-taekwon-do-for-children.html">
+        <strong>Benefits of Taekwon-Do for Children</strong><br>
+        Discover how Taekwon-Do can help develop confidence, discipline,
+        fitness, focus and respect.
+      </a>
+    </section>
+
+    <section class="cta">
+      <h2>Ready to Begin Your Taekwon-Do Journey?</h2>
+
+      <p>
+        Explore Elite Taekwon-Do classes and discover how training can help
+        children and adults become fitter, stronger and more confident.
+      </p>
+
+      <a class="button" href="/#contact">Contact Elite TKD</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© Elite Taekwon-Do Scotland. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
